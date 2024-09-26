@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => '',
+        'hostname'     => 'host.docker.interal',
+        'username'     => 'root',
         'password'     => '',
-        'database'     => '',
+        'database'     => 'hotel',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
