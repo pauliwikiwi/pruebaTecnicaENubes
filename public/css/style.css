@@ -1,0 +1,32 @@
+body{
+    font-family: "Poppins", sans-serif;
+}
+.container-fluid{
+    padding: 0px;
+}
+/*Clases genericas propias*/
+.font-titles{
+    font-family: "Playfair Display", serif;
+}
+
+/*clases landing-page*/
+.main-image{
+    width: 100%;
+    height: calc(100vh - 56px);
+    background-image: url("../images/hotel.avif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.dark-image{
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.title-hotel{
+    font-family: "Playfair Display", serif;
+    font-size: 70px;
+}
+
+.subtitle-site{
+    font-size: 20px;
+}
