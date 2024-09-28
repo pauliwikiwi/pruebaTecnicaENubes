@@ -65,16 +65,16 @@
                         <p class="text-center text-white title-hotel">Hotel Paula</p>
                         <p class="text-center text-white subtitle-site">San Juan - Puerto Rico</p>
                     </div>
-                    <div>
+                    <div class="div-form">
                         <form action="<?= base_url('filter_room') ?>" method="post">
                             <div class="input-group ">
                                 <div class="form-floating">
                                     <input type="text" class="form-control datepicker" id="fechaEntrada floatingInputEntrada" name="fechaEntrada" required>
-                                    <label for="floatingInputEntrada">Fecha Entrada</label>
+                                    <label for="fechaEntrada floatingInputEntrada">Fecha Entrada</label>
                                 </div>
                                 <div class="form-floating">
                                     <input type="text" class="form-control datepicker" id="fechaSalida floatingInputSalida" name="fechaSalida" required>
-                                    <label for="floatingInputSalida">Fecha Salida</label>
+                                    <label for="fechaSalida floatingInputSalida">Fecha Salida</label>
                                 </div>
                                 <div class="form-floating">
                                     <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
@@ -114,6 +114,7 @@
         // Inicializar datepickers
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
+            language: 'es',
             autoclose: true
         });
     });

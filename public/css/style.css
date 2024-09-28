@@ -30,3 +30,11 @@ body{
 .subtitle-site{
     font-size: 20px;
 }
+
+.div-form{
+    margin-top: 70px;
+}
+
+#floatingSelectGrid{
+    width: 110px;
+}

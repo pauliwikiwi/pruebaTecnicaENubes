@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateUsersTable extends Migration
+class CreateCategoryRoomTable extends Migration
 {
     public function up(): void
     {
@@ -17,18 +17,6 @@ class CreateUsersTable extends Migration
             'name' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '100',
-            ],
-            'last_name' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '100',
-            ],
-            'email' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '100',
-            ],
-            'password' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
             ],
             'created_at' => [
                 'type' => 'DATETIME',
@@ -44,11 +32,11 @@ class CreateUsersTable extends Migration
         $this->forge->addKey('id', true);
 
         // Crear la tabla
-        $this->forge->createTable('users', true);
+        $this->forge->createTable('categories_rooms', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('users');
+        $this->forge->dropTable('categories_rooms');
     }
 }
