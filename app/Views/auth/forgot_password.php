@@ -54,26 +54,21 @@
                     <div class="card rounded-card shadow w-25">
                         <div class="card-body">
                             <div class="card-title mt-2 mb-3 text-center text-white">
-                                <h2 class="font-titles">Inicia Sesión</h2>
+                                <h2 class="font-titles">Recuperar la contraseña</h2>
                             </div>
-                            <p class=" text-center card-subtitle mb-2 text-white">¿Es tu primera vez?
-                                <a class="text-white" href="<?= base_url('/register') ?>">Regístrate</a></p>
+                            <div class="card-subtitle text-white">
+                                <p>
+                                    Introduce el email con el que te diste de alta y te enviaremos un correo con instrucciones para que recuperes tu contraseña.
+                                </p>
+                            </div>
                             <div class="card-text p-3">
                                 <div id="alert-msg"></div>
-                                <form id="login-form">
+                                <form id="forgot-password-form">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="mail" name="mail" required>
                                         <label for="mail" class="form-label">Email*</label>
                                     </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="password" class="form-control" id="password" name="password"
-                                               required>
-                                        <label for="password" class="form-label">Contraseña*</label>
-                                    </div>
-                                    <div class=" card-subtitle mt-2 mb-4 text-white">
-                                        <a class="text-white" href="<?= base_url('/forgot_password') ?>">¿Olvidaste la contraseña?</a>
-                                    </div>
-                                    <button type="submit" class="btn btn-outline-light w-100">Inicia Sesión</button>
+                                    <button type="submit" class="btn btn-outline-light w-100">Recuperar contraseña</button>
                                 </form>
                             </div>
                         </div>
@@ -92,24 +87,24 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#login-form').on('submit', function(e) {
+        $('#forgot-password-form').on('submit', function(e) {
             e.preventDefault();
 
             $.ajax({
-                url: 'login/authenticate',  // Ruta del backend en CodeIgniter
+                url: 'forgot_password/sendEmail',  // Ruta al backend en CodeIgniter
                 type: 'POST',
                 data: $(this).serialize(),
                 dataType: 'json',
                 success: function(response) {
                     if (response.success) {
-                        $('#alert-msg').html('<div class="alert alert-success">Login successful. Redirecting...</div>');
-                        window.location.href = response.redirect;  // Redirigir a la página de destino
+                        $('#alert-msg').html('<div class="alert alert-success">' + response.message + '</div>');
+                        $('#forgot-password-form')[0].reset();  // Limpiar el formulario
                     } else {
                         $('#alert-msg').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
                 },
                 error: function() {
-                    $('#alert-msg').html('<div class="alert alert-danger">Error processing your request.</div>');
+                    $('#alert-msg').html('<div class="alert alert-danger">Error al enviar el correo.</div>');
                 }
             });
         });

@@ -67,3 +67,16 @@
 #--------------------------------------------------------------------
 
 # logger.threshold = 4
+
+#--------------------------------------------------------------------
+# EMAIL
+#--------------------------------------------------------------------
+#email.fromEmail = "tu_correo@example.com"
+#email.fromName = "Tu Nombre o Nombre del Proyecto"
+#email.SMTPHost = smtp.gmail.com
+#email.SMTPUser = "tu_correo@example.com"
+#email.SMTPPass = "tu_contraseña"
+#email.SMTPPort = 587
+#email.mailType = smtp
+#email.SMTPTimeout = 5
+#email.SMTPCrypto = tls

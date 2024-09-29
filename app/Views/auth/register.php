@@ -18,6 +18,14 @@
           rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('css/style.css') ?>">
     <title>Hotel Paula Blázquez</title>
+    <style>
+        .invalid-feedback {
+            display: none;
+        }
+        input:invalid ~ .invalid-feedback {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid">
@@ -54,26 +62,34 @@
                     <div class="card rounded-card shadow w-25">
                         <div class="card-body">
                             <div class="card-title mt-2 mb-3 text-center text-white">
-                                <h2 class="font-titles">Inicia Sesión</h2>
+                                <h2 class="font-titles">Regístrate</h2>
                             </div>
-                            <p class=" text-center card-subtitle mb-2 text-white">¿Es tu primera vez?
-                                <a class="text-white" href="<?= base_url('/register') ?>">Regístrate</a></p>
+                            <p class=" text-center card-subtitle mb-2 text-white">¿Ya tienes cuenta creada?
+                                <a class="text-white" href="<?= base_url('/login') ?>">Inicia Sesión</a></p>
                             <div class="card-text p-3">
                                 <div id="alert-msg"></div>
-                                <form id="login-form">
+                                <form id="register-form">
+                                    <div class=" form-floating mb-3">
+                                        <input type="text" class="form-control" id="name" name="name" required>
+                                        <label for="name" class="form-label">Nombre*</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="lastname" name="lastname" required>
+                                        <label for="lastname" class="form-label">Apellidos*</label>
+                                    </div>
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="mail" name="mail" required>
                                         <label for="mail" class="form-label">Email*</label>
                                     </div>
                                     <div class="form-floating mb-3">
                                         <input type="password" class="form-control" id="password" name="password"
+                                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
+                                               title="La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&)"
                                                required>
-                                        <label for="password" class="form-label">Contraseña*</label>
+                                        <label for="password" class="form-label" >Contraseña*</label>
+
                                     </div>
-                                    <div class=" card-subtitle mt-2 mb-4 text-white">
-                                        <a class="text-white" href="<?= base_url('/forgot_password') ?>">¿Olvidaste la contraseña?</a>
-                                    </div>
-                                    <button type="submit" class="btn btn-outline-light w-100">Inicia Sesión</button>
+                                    <button type="submit" class="btn btn-outline-light w-100">Crear cuenta</button>
                                 </form>
                             </div>
                         </div>
@@ -92,26 +108,30 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#login-form').on('submit', function(e) {
+        $('#register-form').on('submit', function(e) {
             e.preventDefault();
 
-            $.ajax({
-                url: 'login/authenticate',  // Ruta del backend en CodeIgniter
-                type: 'POST',
-                data: $(this).serialize(),
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                        $('#alert-msg').html('<div class="alert alert-success">Login successful. Redirecting...</div>');
-                        window.location.href = response.redirect;  // Redirigir a la página de destino
-                    } else {
-                        $('#alert-msg').html('<div class="alert alert-danger">' + response.message + '</div>');
+            if ($('#password')[0].checkValidity()) {
+                $.ajax({
+                    url: 'register/save',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            $('#alert-msg').html('<div class="alert alert-success">' + response.message + '</div>');
+                            $('#register-form')[0].reset();
+                        } else {
+                            $('#alert-msg').html('<div class="alert alert-danger">' + response.message + '</div>');
+                        }
+                    },
+                    error: function() {
+                        $('#alert-msg').html('<div class="alert alert-danger">Error en el registro, inténtalo de nuevo.</div>');
                     }
-                },
-                error: function() {
-                    $('#alert-msg').html('<div class="alert alert-danger">Error processing your request.</div>');
-                }
-            });
+                });
+            } else {
+                $('#password').focus();
+            }
         });
     });
 </script>

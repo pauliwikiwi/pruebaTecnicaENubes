@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <script src="https://kit.fontawesome.com/c33b9527eb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,10 +37,12 @@
                         <a class="nav-link active" href="#">Habitaciones</a>
                     </li>
                 </ul>
-                <i class="fa-regular fa-user"></i>
-                <span class="navbar-text">
-                   Iniciar Sesión
-                </span>
+                <a class="nav-link" aria-current="page" href="<?= base_url('/login') ?>">
+                    <i class="fa-regular fa-user"></i>
+                    <span class="navbar-text">
+                        Iniciar Sesión
+                    </span>
+                </a>
             </div>
         </div>
     </nav>

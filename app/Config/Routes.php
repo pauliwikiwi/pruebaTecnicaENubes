@@ -12,3 +12,7 @@ $routes->get('/rooms', 'RoomController::getAllRooms');
 /*Rutas de autenticación*/
 $routes->get('login', 'LoginController::index');
 $routes->post('login/authenticate', 'LoginController::authenticate');
+$routes->get('register', 'RegisterController::index');
+$routes->post('register/save', 'RegisterController::save');
+$routes->get('forgot_password', 'ForgotPasswordController::index');
+$routes->post('forgot_password/sendEmail', 'ForgotPasswordController::sendEmail');

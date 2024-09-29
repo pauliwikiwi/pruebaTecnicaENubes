@@ -61,3 +61,12 @@ body{
     width: 20px;
     height: 20px;
 }
+
+/*estilo login*/
+.custom-active, .custom-active .navbar-text{
+    color: rgba(0,0,0,.9) !important;
+}
+.rounded-card{
+    background-color: #6da667;
+    border-radius: 12px !important;
+}
