@@ -31,7 +31,7 @@
                         <a class="nav-link active" aria-current="page" href="#">El hotel</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Habitaciones</a>
+                        <a class="nav-link" href="<?= base_url('/rooms') ?>">Habitaciones</a>
                     </li>
                 </ul>
                 <span class="material-symbols-outlined">
@@ -67,16 +67,16 @@
                     </div>
                     <div class="div-form">
                         <form action="<?= base_url('filter_room') ?>" method="post">
-                            <div class="input-group ">
-                                <div class="form-floating">
+                            <div class="input-group custom-searchar">
+                                <div class="form-floating me-2">
                                     <input type="text" class="form-control datepicker" id="fechaEntrada floatingInputEntrada" name="fechaEntrada" required>
                                     <label for="fechaEntrada floatingInputEntrada">Fecha Entrada</label>
                                 </div>
-                                <div class="form-floating">
+                                <div class="form-floating me-2">
                                     <input type="text" class="form-control datepicker" id="fechaSalida floatingInputSalida" name="fechaSalida" required>
                                     <label for="fechaSalida floatingInputSalida">Fecha Salida</label>
                                 </div>
-                                <div class="form-floating">
+                                <div class="form-floating me-2">
                                     <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
                                         <option value="1">1</option>
                                         <option value="2" selected>2</option>
@@ -86,6 +86,9 @@
                                         <option value="6">6</option>
                                     </select>
                                     <label for="floatingSelectGrid">Personas</label>
+                                </div>
+                                <div class="form-floating">
+                                    <button class="btn btn-outline-light h-100" type="button" id="button-addon2">Buscar</button>
                                 </div>
                             </div>
                         </form>

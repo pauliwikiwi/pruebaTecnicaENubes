@@ -22,6 +22,10 @@ class CreateRoomsTable extends Migration
                 'type' => 'INT',
                 'constraint' => '10',
             ],
+            'meters' => [
+                'type' => 'INT',
+                'constraint' => '10',
+            ],
             'price' => [
                 'type' => 'INT',
                 'constraint' => '100',
