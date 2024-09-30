@@ -37,12 +37,28 @@
                         <a class="nav-link active" href="#">Habitaciones</a>
                     </li>
                 </ul>
-                <a class="nav-link" aria-current="page" href="<?= base_url('/login') ?>">
-                    <i class="fa-regular fa-user"></i>
-                    <span class="navbar-text">
-                        Iniciar Sesión
-                    </span>
-                </a>
+                    <?php
+                        $name = '';
+                        $session = session();
+                        if ($session->get('logged_in') == 1) {
+                            $name = $session->get('usuario_nombre');
+                        }
+                    ?>
+                    <?php if ($name != ''): ?>
+                        <a class="nav-link" aria-current="page" href="<?= base_url('/logout') ?>">
+                            <i class="fa-solid fa-arrow-right-from-bracket text-muted"></i>
+                            <span class="navbar-text">
+                                <?= $name ?>
+                            </span>
+                        </a>
+                    <?php else: ?>
+                        <a class="nav-link" aria-current="page" href="<?= base_url('/login') ?>">
+                            <i class="fa-solid fa-arrow-right-to-bracket text-muted"></i>
+                            <span class="navbar-text">
+                                Iniciar Sesión
+                            </span>
+                        </a>
+                    <?php endif; ?>
             </div>
         </div>
     </nav>
@@ -58,7 +74,7 @@
             <?php foreach ($rooms as $room): ?>
                 <div class="row">
                     <div class="col">
-                        <div class="card mb-2">
+                        <div class="card mb-2 custom-card">
                             <div class="row g-0">
                                 <div class="col-md-4">
                                     <img src="<?= base_url('images/rooms/' . $room['id'] . '/room.jpg') ?>"
@@ -133,7 +149,7 @@
                                             <div class="row justify-content-end align-items-center">
                                                 <div class="col-md-2">
                                                     <span>
-                                                        <s class="me-4">
+                                                        <s class="me-3">
                                                             <?= number_format($room['price'] * 1.10); ?>€
                                                         </s>
                                                         <?= $room['price']; ?> €

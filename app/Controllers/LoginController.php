@@ -24,32 +24,59 @@ class LoginController extends BaseController
         $password = $request->getPost('password');
 
         // Buscar el usuario por su nombre de usuario
-        $user = $userModel->getUserByMail($mail);
+        $usuario = $userModel->getUserByMail($mail);
 
         // Verificar si el usuario existe
-        if ($user) {
-            // Verificar si la contraseña ingresada coincide con la almacenada (usando hash)
-            if (password_verify($password, $user['password'])) {
-                // Contraseña correcta, iniciar sesión
-                $response = [
-                    'success' => true,
-                    'redirect' => '/dashboard'  // Redirigir a la página de destino
-                ];
-            } else {
-                // Contraseña incorrecta
-                $response = [
-                    'success' => false,
-                    'message' => 'Invalid username or password.'
-                ];
-            }
-        } else {
+        if (!$usuario) {
             // Usuario no encontrado
-            $response = [
+            return $this->response->setJSON([
                 'success' => false,
-                'message' => 'Invalid username or password.'
-            ];
+                'message' => 'Correo electrónico o contraseña incorrectos.'
+            ]);
         }
 
+        // Verificar si el correo está confirmado
+        if (!$usuario['confirmed_email']) {
+            // Si el correo no está confirmado, impedir el login
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Por favor, confirma tu correo electrónico antes de iniciar sesión.'
+            ]);
+        }
+
+        // Verificar la contraseña
+        if (!password_verify($password, $usuario['password'])) {
+            // Contraseña incorrecta
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Correo electrónico o contraseña incorrectos.'
+            ]);
+        }
+
+        // Iniciar sesión: Guardar los datos del usuario en la sesión
+        $session = session();
+        $session->set([
+            'usuario_id' => $usuario['id'],
+            'usuario_nombre' => $usuario['name'] . ' ' . $usuario['last_name'],
+            'usuario_email' => $usuario['email'],
+            'logged_in' => true
+        ]);
+
+        // Retornar respuesta de éxito
+        $response = [
+            'success' => true,
+            'redirect' => '/rooms'  // Redirigir a la página de destino
+        ];
+
         return $this->response->setJSON($response);
+
+    }
+
+    public function logout()
+    {
+        $session = session();
+        $session->destroy(); // Elimina la sesión del usuario
+
+        return redirect()->to('/'); // Redirige a la página de login o a donde desees
     }
 }

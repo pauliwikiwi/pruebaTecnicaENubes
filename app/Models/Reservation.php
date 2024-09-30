@@ -4,25 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class User extends Model
+class Reservation extends Model
 {
-    protected $table            = 'users';
+    protected $table            = 'reservations';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [
-        'id',
-        'name',
-        'last_name',
-        'email',
-        'email_token',
-        'confirmed_email',
-        'password',
-        'reset_token',
-        'reset_token_expires'
-    ];
+    protected $allowedFields    = ['id', 'id_user', 'id_room', 'id_status', 'entry_date', 'departure_date', 'created_at', 'updated_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -54,8 +44,11 @@ class User extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getUserByMail($mail)
+    public function getReservasHabiatciones()
     {
-        return $this->where('email', $mail)->first();
+        // Realiza la consulta con JOIN para obtener todos los datos relacionados
+        return $this->select('reservations.*, rooms.* AS habitacion')
+            ->join('rooms', 'reservations.id_room = rooms.id')
+            ->findAll();
     }
 }

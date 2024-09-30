@@ -73,7 +73,8 @@ class ForgotPasswordController extends BaseController
     {
         $request = \Config\Services::request();
         $token = $request->getPost('token');
-        $newPassword = $request->getPost('password');
+        $password = $request->getPost('password');
+        $confirmPassword = $request->getPost('password_repeat');
 
         $userModel = new User();
         $user = $userModel->where('reset_token', $token)->where('reset_token_expires >=', date('Y-m-d H:i:s'))->first();
@@ -85,8 +86,12 @@ class ForgotPasswordController extends BaseController
             ]);
         }
 
+        if ($password !== $confirmPassword) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Las contraseñas no coinciden.']);
+        }
+
         // Hashear la nueva contraseña
-        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         // Actualizar la contraseña y eliminar el token de restablecimiento
         $userModel->update($user['id'], [

@@ -38,17 +38,69 @@ class RegisterController extends BaseController
         // Hashear la contraseña
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
+        // Crear el token de confirmación
+        $token = bin2hex(random_bytes(16)); // Generar token aleatorio
+
         // Guardar los datos del nuevo usuario en la base de datos
         $userModel->save([
             'name' => $nombre,
             'last_name' => $apellidos,
             'email' => $correo,
-            'password' => $hashedPassword  // Guardar la contraseña hasheada
+            'password' => $hashedPassword,
+            'email_token' => $token, // Guardar el token para confirmar el correo
+            'confirmed_email' => false, // Marcar como no confirmado// Guardar la contraseña hasheada
         ]);
+
+        // Enviar el correo de confirmación
+        $this->enviarCorreoConfirmacion($correo, $token);
+
 
         return $this->response->setJSON([
             'success' => true,
-            'message' => 'Usuario registrado correctamente.'
+            'message' => 'Registro exitoso. Por favor, revisa tu correo para confirmar tu cuenta.'
         ]);
+    }
+    private function enviarCorreoConfirmacion($email, $token)
+    {
+        $emailService = \Config\Services::email();
+
+        $emailService->setTo($email);
+        $emailService->setFrom('correo_pruebas_paula_blazquez@hotmail.com', 'Hotel Paula');
+        $emailService->setSubject('Confirma tu correo electrónico');
+
+        // Crear la URL de confirmación
+        $confirmUrl = base_url() . 'confirm_email/' . $token;
+
+        // Cargar la vista del correo
+        $message = view('emails/confirmation_email', ['confirmUrl' => $confirmUrl]);
+
+        $emailService->setMessage($message);
+
+        // Enviar el correo
+        if ($emailService->send()) {
+            log_message('info', 'Correo de confirmación enviado a ' . $email);
+        } else {
+            log_message('error', 'Error al enviar el correo de confirmación.');
+        }
+    }
+    // Método para confirmar el correo
+    public function confirmarEmail($token)
+    {
+        $usuarioModel = new User();
+
+        // Buscar al usuario por el token
+        $usuario = $usuarioModel->where('token', $token)->first();
+
+        if ($usuario) {
+            // Confirmar el correo actualizando el campo email_confirmado
+            $usuarioModel->update($usuario['id'], [
+                'email_confirmado' => true,
+                'token' => null // Eliminar el token
+            ]);
+
+            echo 'Correo confirmado exitosamente.';
+        } else {
+            echo 'Token no válido o expirado.';
+        }
     }
 }
