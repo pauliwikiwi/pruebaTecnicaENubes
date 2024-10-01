@@ -50,7 +50,7 @@
                 }
                 ?>
                 <?php if ($name != ''): ?>
-                    <a class="nav-link text-muted" aria-current="page" href="<?= base_url('protected/dashboard') ?>">
+                    <a class="nav-link text-muted" aria-current="page" href="<?= base_url('user/dashboard') ?>">
                         Mis reservas
                     </a>
                     <a class="nav-link" aria-current="page" href="<?= base_url('/logout') ?>">
@@ -92,35 +92,7 @@
                         <p class="text-center text-white title-hotel">Hotel Paula</p>
                         <p class="text-center text-white subtitle-site">San Juan - Puerto Rico</p>
                     </div>
-                    <div class="div-form">
-                        <div id="alert-msg"></div>
-                        <form id="search_room_form" method="post">
-                            <div class="input-group custom-searchar">
-                                <div class="form-floating me-2">
-                                    <input type="text" class="form-control datepicker" id="fecha_entrada" name="fecha_entrada" required>
-                                    <label for="fecha_entrada">Fecha Entrada</label>
-                                </div>
-                                <div class="form-floating me-2">
-                                    <input type="text" class="form-control datepicker" id="fecha_salida" name="fecha_salida" required>
-                                    <label for="fecha_salida">Fecha Salida</label>
-                                </div>
-                                <div class="form-floating me-2">
-                                    <select class="form-select" id="personas" aria-label="Floating label select example" name="personas" required>
-                                        <option value="1">1</option>
-                                        <option value="2" selected>2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
-                                    <label for="floatingSelectGrid">Personas</label>
-                                </div>
-                                <div class="form-floating">
-                                    <button class="btn btn-outline-light h-100" type="submit" id="button-search">Buscar</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+
                 </div>
 
             </div>
@@ -136,80 +108,6 @@
 
 <!-- Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- jQuery UI -->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-    // Configurar el idioma español para el datepicker
-    $.datepicker.setDefaults($.datepicker.regional['es'] = {
-        closeText: 'Cerrar',
-        prevText: 'Anterior',
-        nextText: 'Siguiente',
-        currentText: 'Hoy',
-        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
-        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-        weekHeader: 'Sm',
-        dateFormat: 'dd/mm/yy',
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: ''
-    });
-    $(document).ready(function () {
-        let today = new Date();
-        let dateFormat = 'dd/mm/yy';
 
-        // Inicializar el datepicker en el campo de fecha de entrada
-        $('#fecha_entrada').datepicker({
-            minDate: today,
-            dateFormat: dateFormat,
-            onSelect: function(dateText) {
-                let selectedDate = $(this).datepicker('getDate');
-                let minDate = new Date(selectedDate.getTime());
-                minDate.setDate(minDate.getDate() + 1);  // Añadir un día a la fecha de entrada
-                $('#fecha_salida').datepicker('option', 'minDate', minDate);
-            }
-        });
-
-        // Inicializar el datepicker en el campo de fecha de salida
-        $('#fecha_salida').datepicker({
-            minDate: today,
-            dateFormat: dateFormat
-        });
-
-        $('#search_room_form').on('submit', function(e) {
-            e.preventDefault();
-
-            // Capturar los datos del formulario
-            let formData = {
-                fecha_entrada: $('#fecha_entrada').val(),
-                fecha_salida: $('#fecha_salida').val(),
-                personas: $('#personas').val()
-            };
-
-            // Enviar los datos mediante AJAX
-            $.ajax({
-                url: '/filter_room', // URL del backend que procesará los datos
-                type: 'POST',
-                data: formData,
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                        window.location.href = response.redirect;
-                    } else {
-                        $('#alert-msg').html('<div class="alert alert-danger">' + response.message + '</div>');
-                    }
-                },
-                error: function() {
-                    $('#alert-msg').html('<div class="alert alert-danger">Error en el envío de la reserva. Inténtalo de nuevo.</div>');
-                }
-            });
-        });
-    });
-</script>
 </body>
 </html>

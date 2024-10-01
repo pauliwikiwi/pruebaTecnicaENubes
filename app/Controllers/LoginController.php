@@ -65,7 +65,7 @@ class LoginController extends BaseController
         // Retornar respuesta de éxito
         $response = [
             'success' => true,
-            'redirect' => '/rooms'  // Redirigir a la página de destino
+            'redirect' => '/user/dashboard'  // Redirigir a la página de destino
         ];
 
         return $this->response->setJSON($response);

@@ -69,6 +69,16 @@ body{
     height: 20px;
 }
 
+.btn-green{
+    background-color: #6da667;
+    border-color: #6da667;
+    color: #ffffff;
+}
+
+.form-number{
+    min-width: 153px !important;
+}
+
 /*estilo login*/
 .custom-active, .custom-active .navbar-text{
     color: rgba(0,0,0,.9) !important;
@@ -76,4 +86,11 @@ body{
 .rounded-card{
     background-color: #6da667;
     border-radius: 12px !important;
+}
+
+/*estilo dashboard user*/
+.card-reservation{
+    border-radius: 12px !important;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, .1);
+    border: 0px !important;
 }

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\CategoriesRooms;
 use App\Models\Reservation;
 use App\Models\Room;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -67,11 +68,13 @@ class RoomController extends BaseController
     {
         // Instanciamos el modelo de habitaciones
         $room = new Room();
+        $categories = new CategoriesRooms();
 
         // Obtenemos todas las habitaciones con sus respectivas categorías
         $rooms = $room->getHabitacionesConCategorias();
+        $categories = $categories->findAll();
 
         // Pasamos los datos a la vista
-        return view('rooms/view_rooms', ['rooms' => $rooms]);
+        return view('rooms/view_rooms', ['rooms' => $rooms, 'categories' => $categories]);
     }
 }

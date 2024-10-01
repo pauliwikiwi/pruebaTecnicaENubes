@@ -6,13 +6,14 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--CSS Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Icons Material -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <!-- Icons Font Awesome -->
     <script src="https://kit.fontawesome.com/c33b9527eb.js" crossorigin="anonymous"></script>
     <!-- Tabler icon-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
     <!-- Fuentes google-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +37,7 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<?= base_url('/') ?>">El hotel</a>
+                        <a class="nav-link" aria-current="page" href="<?= base_url('/') ?>">El hotel</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('/rooms') ?>">Habitaciones</a>
@@ -50,7 +51,7 @@
                 }
                 ?>
                 <?php if ($name != ''): ?>
-                    <a class="nav-link text-muted" aria-current="page" href="#">
+                    <a class="nav-link text-muted custom-active" aria-current="page" href="#">
                         Mis reservas
                     </a>
                     <a class="nav-link" aria-current="page" href="<?= base_url('/logout') ?>">
@@ -70,6 +71,100 @@
             </div>
         </div>
     </nav>
+    <div class="container mt-5">
+        <?php foreach ($reservations as $reservation): ?>
+            <?php
+            // Definir las fechas
+            $fechaEntrada = $reservation['entry_date'];
+            $fechaSalida = $reservation['departure_date'];
+
+            $entrada = new DateTime($fechaEntrada);
+            $salida = new DateTime($fechaSalida);
+
+            // Calcular la diferencia
+            $diferencia = $entrada->diff($salida);
+            $diasDiferencia = $diferencia->days; // Total de días
+
+            ?>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-reservation">
+                        <div class="row">
+                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                <img src="<?= base_url('images/rooms/' . $reservation['id_room'] . '/room.jpg') ?>"
+                                     alt="" width="150px" height="150px" style="object-fit: cover; border-radius: 20px">
+                            </div>
+                            <div class="col-10">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h5 class="d-flex justify-content-between">
+                                            <span><?= $reservation['name']; ?></span><span
+                                                    class="badge rounded-pill bg-secondary"> <?= $reservation['status']; ?></span>
+                                        </h5>
+                                        <p> <?= date("d/m/Y", strtotime($reservation['entry_date'])); ?>
+                                            - <?= date("d/m/Y", strtotime($reservation['departure_date'])); ?></p>
+                                    </div>
+                                    <div class="card-text">
+                                        <p>
+                                            Reserva para <?= $diasDiferencia; ?> noches
+                                        </p>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Total: <?= $diasDiferencia * $reservation['price']; ?> €</span>
+                                            <span>
+                                                <a class="btn btn-green me-2"
+                                                   href="<?= base_url('user/pdf/generate_reservation/' . $reservation['id_reservation']) ?>">
+                                                    <span class="material-symbols-outlined">
+                                                    download
+                                                    </span>
+                                                </a>
+                                                <a class="btn btn-green me-2"
+                                                   href="<?= base_url('user/reservation/' . $reservation['id_reservation']) ?>">
+                                                    Ver
+                                                </a>
+                                                <a class="btn btn-green me-2"
+                                                   href="<?= base_url('user/reservation/edit/' . $reservation['id_reservation']) ?>">
+                                                    Modificar reserva
+                                                </a>
+                                                <button class="btn btn-danger me-2" id="cancel-reservation"
+                                                        onclick="cancelReservation(<?= $reservation['id_reservation']; ?>)">
+                                                    Cancelar
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+
+    </div>
 </div>
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function cancelReservation(id) {
+        let id_reservation = id;
+        $.ajax({
+            url: '/user/reservation/cancel/' + id, // Agrega el parámetro a la URL
+            type: 'GET',
+            dataType: 'json', // Esperamos un JSON de respuesta
+            success: function (data) {
+                // Procesar datos recibidos
+                location.reload()
+            },
+            error: function (xhr, status, error) {
+                // Manejo de errores
+                $('#result').html('Error: ' + error);
+            }
+        });
+    }
+
+</script>
 </body>
 </html>
