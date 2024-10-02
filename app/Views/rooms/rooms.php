@@ -115,9 +115,10 @@
                                                     </span>
                                         </div>
                                         <div class="col-md-3">
-                                            <form>
-
-
+                                            <form method="get">
+                                                <input type="hidden" class="booking_entry_date" value=" <?= $fecha_entrada ?>">
+                                                <input type="hidden" class="booking_departure_date" value=" <?= $fecha_entrada ?>">
+                                                <input type="hidden" class="booking_person" value=" <?= $personas ?>">
                                                 <button
                                                         class="btn btn-green w-100 show-room-btn"
                                                         type="submit"

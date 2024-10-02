@@ -80,7 +80,6 @@ class RoomController extends BaseController
                 'fecha_entrada' => $fecha_entrada,
                 'fecha_salida' => $fecha_salida,
                 'personas' => $personas,
-
             ]);
 
     }
@@ -95,20 +94,18 @@ class RoomController extends BaseController
         $rooms = $room->getHabitacionesConCategorias();
         $categories = $categories->findAll();
 
+        $fecha_entrada = date('d-m-Y');
+        $fecha_salida = date('d-m-Y', strtotime('+1 day'));
+        $personas = 2;
+
         // Pasamos los datos a la vista
-        return view('rooms/view_rooms', ['rooms' => $rooms, 'categories' => $categories]);
-    }
-
-    public function roomsWithoutFilters(){
-        // Instanciamos el modelo de habitaciones
-        $room = new Room();
-        $categories = new CategoriesRooms();
-
-        // Obtenemos todas las habitaciones con sus respectivas categorías
-        $rooms = $room->getHabitacionesConCategorias();
-        $categories = $categories->findAll();
-
-        return view('rooms/rooms', ['rooms' => $rooms, 'categories' => $categories]);
+        return view('rooms/view_rooms', [
+            'rooms' => $rooms,
+            'categories' => $categories,
+            'fecha_entrada' => $fecha_entrada,
+            'fecha_salida' => $fecha_salida,
+            'personas' => $personas
+        ]);
     }
 
 

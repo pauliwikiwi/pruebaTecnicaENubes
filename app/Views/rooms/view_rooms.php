@@ -77,11 +77,11 @@
                     <form id="filter_room_form" method="post">
                         <div class="input-group custom-searchar justify-content-center">
                             <div class="form-floating me-2">
-                                <input type="text" class="form-control datepicker" id="fecha_entrada" name="fecha_entrada" autocomplete="off" required>
+                                <input type="text" class="form-control datepicker" id="fecha_entrada" name="fecha_entrada" required>
                                 <label for="fecha_entrada">Fecha Entrada</label>
                             </div>
                             <div class="form-floating me-2">
-                                <input type="text" class="form-control datepicker" id="fecha_salida" name="fecha_salida" autocomplete="off" required>
+                                <input type="text" class="form-control datepicker" id="fecha_salida" name="fecha_salida" required>
                                 <label for="fecha_salida">Fecha Salida</label>
                             </div>
                             <div class="form-floating me-2">
@@ -132,7 +132,118 @@
 
         </div>
         <div id="contenido-rooms">
+            <div>
+                <?php foreach ($rooms as $room): ?>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card mb-2 custom-card">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="<?= base_url('images/rooms/' . $room['id'] . '/room.jpg') ?>"
+                                             class="img-fluid rounded-start custom-height" alt="Imagen habitación">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h4 class="card-title font-titles"><?= $room['name']; ?></h4>
+                                            <p class="card-text"><?= $room['description']; ?></p>
+                                            <div class="card-text mb-4">
+                                                <small class="text-muted"><?= $room['meters']; ?> m <sup>2</sup></small>
+                                                <span class="divider"></span>
+                                                <small class="text-muted">Ocupación máx.: <?= $room['people']; ?></small>
+                                                <span class="divider"></span>
+                                                <small class="text-muted"><?= $room['category']; ?></small>
+                                            </div>
+                                            <div class="card-text">
+                                                <div class="row mb-2">
+                                                    <?php if ($room['wifi']): ?>
+                                                        <div class="col-md-3">
+                                                            <i class="fa-solid fa-wifi"></i>
+                                                            <small>Conexión Wi-fi </small>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                    <?php if ($room['television']): ?>
+                                                        <div class="col-md-3">
+                                                            <i class="fa-solid fa-tv"></i>
+                                                            <small>Televisión</small>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                    <?php if ($room['air_conditioning']): ?>
+                                                        <div class="col-md-3">
+                                                            <i class="ti ti-snowflake"></i>
+                                                            <small>Aire Acondicionado</small>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                    <?php if ($room['minibar']): ?>
+                                                        <div class="col-md-3">
+                                                            <i class="ti ti-fridge"></i>
+                                                            <small>Minibar</small>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                    <?php if ($room['hair_dryer']): ?>
+                                                        <div class="col-md-3">
+                                                            <img src="<?= base_url('images/icons/hair_dryer.svg') ?>"
+                                                                 alt="icon hair" class="icons">
+                                                            <small>Secador de pelo</small>
+                                                        </div>
+                                                    <?php endif; ?>
 
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-md-12">
+                                                        Todas las habitaciones contienen:
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <i class="ti ti-device-landline-phone"></i>
+                                                        <small>Teléfono</small>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <img src="<?= base_url('images/icons/security_box.svg') ?>"
+                                                             alt="icon security box" class="icons">
+                                                        <small>Caja de seguridad</small>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <img src="<?= base_url('images/icons/amenities.svg') ?>"
+                                                             alt="icon amenities" class="icons">
+                                                        <small>Amenities</small>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <i class="ti ti-ironing-1"></i>
+                                                        <small>Plancha (bajo petición)</small>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-end align-items-center">
+                                                    <div class="col-md-2">
+                                                    <span>
+                                                        <s class="me-3">
+                                                            <?= number_format($room['price'] * 1.10); ?>€
+                                                        </s>
+                                                        <?= $room['price']; ?> €
+                                                    </span>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <form method="get">
+                                                            <input type="hidden" class="booking_entry_date" value=" <?= $fecha_entrada ?>">
+                                                            <input type="hidden" class="booking_departure_date" value=" <?= $fecha_entrada ?>">
+                                                            <input type="hidden" class="booking_person" value=" <?= $personas ?>">
+                                                            <button
+                                                                    class="btn btn-green w-100 show-room-btn"
+                                                                    type="submit"
+                                                                    data-room-id="<?= $room['id']; ?>"
+                                                                    onclick="booking_room(<?= $room['id']; ?>)"
+                                                            >Reservar</button>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
 
     </div>
@@ -163,8 +274,16 @@
         yearSuffix: ''
     });
     $(document).ready(function () {
+
         let today = new Date();
         let dateFormat = 'dd/mm/yy';
+
+        function convertToDate(dateText) {
+            const parts = dateText.split('/');
+            // Crear una nueva fecha en el formato año, mes, día
+            return new Date(parts[2], parts[1] - 1, parts[0]);
+        }
+
 
         // Inicializar el datepicker en el campo de fecha de entrada
         $('#fecha_entrada').datepicker({
@@ -172,19 +291,19 @@
             dateFormat: dateFormat,
             onSelect: function(dateText) {
                 let selectedDate = $(this).datepicker('getDate');
+                if (!selectedDate) {
+                    selectedDate = convertToDate(dateText);
+                }
                 let minDate = new Date(selectedDate.getTime());
                 minDate.setDate(minDate.getDate() + 1);  // Añadir un día a la fecha de entrada
                 $('#fecha_salida').datepicker('option', 'minDate', minDate);
             }
         });
-
         // Inicializar el datepicker en el campo de fecha de salida
         $('#fecha_salida').datepicker({
             minDate: today,
             dateFormat: dateFormat
         });
-
-        getRooms()
 
         $('#filter_room_form').on('submit', function(e) {
             e.preventDefault();
@@ -203,10 +322,29 @@
                 },
                 beforeSend: function() {
                     $('#loader').show();
-                    $('#contenido-rooms').html('')// Muestra el loader antes de enviar la solicitud
+                    $('#contenido-rooms').html('')
                 },
                 success: function(response) {
                     $('#contenido-rooms').html(response);
+                    // Reinicializar el datepicker en los nuevos elementos
+                    $('#fecha_entrada').datepicker({
+                        minDate: today,
+                        dateFormat: dateFormat,
+                        onSelect: function (dateText) {
+                            let selectedDate = $(this).datepicker('getDate');
+                            if (!selectedDate) {
+                                selectedDate = convertToDate(dateText);
+                            }
+                            let minDate = new Date(selectedDate.getTime());
+                            minDate.setDate(minDate.getDate() + 1);
+                            $('#fecha_salida').datepicker('option', 'minDate', minDate);
+                        }
+                    });
+
+                    $('#fecha_salida').datepicker({
+                        minDate: today,
+                        dateFormat: dateFormat
+                    });
                 },
                 error: function() {
                     $('#alert-msg').html('<div class="alert alert-danger">Error en el envío de la reserva. Inténtalo de nuevo.</div>');
@@ -217,21 +355,6 @@
             });
         });
     });
-
-    function getRooms(){
-        console.log('entro')
-        $.ajax({
-            url: '/roomsWithoutFilters',
-            type: 'GET',
-            success: function(response) {
-                console.log('esto es el success')
-                $('#contenido-rooms').html(response);
-            },
-            error: function() {
-                $('#alert-msg').html('<div class="alert alert-danger">Error en el envío de la reserva. Inténtalo de nuevo.</div>');
-            }
-        });
-    }
 </script>
 </body>
 </html>
