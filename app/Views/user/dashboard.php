@@ -121,6 +121,7 @@
                                                    href="<?= base_url('user/reservation/' . $reservation['id_reservation']) ?>">
                                                     Ver
                                                 </a>
+                                                 <?php if ($reservation['status'] != 'Cancelada'):?>
                                                 <a class="btn btn-green me-2"
                                                    href="<?= base_url('user/reservation/edit/' . $reservation['id_reservation']) ?>">
                                                     Modificar reserva
@@ -129,6 +130,7 @@
                                                         onclick="cancelReservation(<?= $reservation['id_reservation']; ?>)">
                                                     Cancelar
                                                 </button>
+                                                <?php endif; ?>
                                             </span>
                                         </div>
                                     </div>

@@ -42,6 +42,18 @@ class ReservationController extends BaseController
     public function cancelReservationById($id_reservation)
     {
 
+        $statusModel = new StatusReservations();
+
+        $status = $statusModel->where('name', 'Cancelada')->first();
+
+        $reservationModel = new Reservation();
+
+        $data = ['id_status' => $status['id']];
+        $reservationModel->update($id_reservation, $data);
+
+        // Responde con éxito
+        return $this->response->setStatusCode(ResponseInterface::HTTP_OK)
+            ->setJSON(['success' => true, 'message' => 'Estado actualizado']);
 
 
     }
