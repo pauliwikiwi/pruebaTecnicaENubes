@@ -16,9 +16,12 @@ class RoomController extends BaseController
         $request = \Config\Services::request();
 
         // Obtener los datos enviados por el formulario
-        $fecha_entrada = $request->getPost('fecha_entrada');
-        $fecha_salida = $request->getPost('fecha_salida');
-        $personas = $request->getPost('personas');
+        $fecha_entrada = $request->getGet('fecha_entrada');
+        $fecha_salida = $request->getGet('fecha_salida');
+        $personas = $request->getGet('personas') ?? 2;
+        $category = $request->getGet('category');
+        $min_price = $request->getGet('min_price') ?? 0;
+        $max_price = $request->getGet('max_price') ?? 500;
 
         // Validar los datos recibidos (puedes ampliar estas validaciones)
         if (empty($fecha_entrada) || empty($fecha_salida) || empty($personas)) {
@@ -44,23 +47,41 @@ class RoomController extends BaseController
 
         $rooms = new Room();
 
+        $roomQuery = $rooms->select('rooms.*, categories_rooms.name as category')
+            ->join('categories_rooms', 'categories_rooms.id = rooms.id_category');
+
+
+
         if (isset($rooms_id)){
-            $roomModels = $rooms->select('rooms.*, categories_rooms.name as category')
-                ->whereNotIn('rooms.id', $rooms_id)
-                ->join('categories_rooms', 'categories_rooms.id = rooms.id_category')
-                ->orderBy('rooms.price', 'ASC')->findAll();
-        }else{
-            $roomModels = $rooms->getHabitacionesConCategorias();
+            $roomQuery->whereNotIn('rooms.id', $rooms_id);
+        }
+
+        if (isset($category)){
+            $roomQuery->where('rooms.id_category', $category);
+        }
+        if ($min_price !== ''){
+            $roomQuery->where('rooms.price >=', $min_price);
+        }
+        if ($max_price !== ''){
+            $roomQuery ->where('rooms.price <=', $max_price);;
         }
 
 
-        // Retornar respuesta de éxito
-        $response = [
-            'success' => true,
-            'redirect' => '/rooms'  // Redirigir a la página de destino
-        ];
+        $roomModels = $roomQuery->orderBy('rooms.price', 'ASC')->findAll();
 
-        return $this->response->setJSON($response);
+        $categories = new CategoriesRooms();
+        $categories = $categories->findAll();
+
+
+        return view('rooms/rooms',
+            [
+                'rooms' => $roomModels,
+                'categories' => $categories,
+                'fecha_entrada' => $fecha_entrada,
+                'fecha_salida' => $fecha_salida,
+                'personas' => $personas,
+
+            ]);
 
     }
 
@@ -76,5 +97,23 @@ class RoomController extends BaseController
 
         // Pasamos los datos a la vista
         return view('rooms/view_rooms', ['rooms' => $rooms, 'categories' => $categories]);
+    }
+
+    public function roomsWithoutFilters(){
+        // Instanciamos el modelo de habitaciones
+        $room = new Room();
+        $categories = new CategoriesRooms();
+
+        // Obtenemos todas las habitaciones con sus respectivas categorías
+        $rooms = $room->getHabitacionesConCategorias();
+        $categories = $categories->findAll();
+
+        return view('rooms/rooms', ['rooms' => $rooms, 'categories' => $categories]);
+    }
+
+
+    public function getRoomById($room_id)
+    {
+
     }
 }

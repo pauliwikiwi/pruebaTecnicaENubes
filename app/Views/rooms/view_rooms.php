@@ -5,17 +5,22 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <!--CSS Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Icons Material -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!-- Icons Font Awesome -->
     <script src="https://kit.fontawesome.com/c33b9527eb.js" crossorigin="anonymous"></script>
+    <!-- Tabler icon-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+    <!-- Fuentes google-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
           rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"
-          rel="stylesheet">
+    <!-- jQuery UI CSS -->
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <!-- CSS Propio-->
     <link rel="stylesheet" href="<?= base_url('css/style.css') ?>">
     <title>Hotel Paula Blázquez</title>
 </head>
@@ -72,11 +77,11 @@
                     <form id="filter_room_form" method="post">
                         <div class="input-group custom-searchar justify-content-center">
                             <div class="form-floating me-2">
-                                <input type="text" class="form-control datepicker" id="fecha_entrada" name="fecha_entrada" required>
+                                <input type="text" class="form-control datepicker" id="fecha_entrada" name="fecha_entrada" autocomplete="off" required>
                                 <label for="fecha_entrada">Fecha Entrada</label>
                             </div>
                             <div class="form-floating me-2">
-                                <input type="text" class="form-control datepicker" id="fecha_salida" name="fecha_salida" required>
+                                <input type="text" class="form-control datepicker" id="fecha_salida" name="fecha_salida" autocomplete="off" required>
                                 <label for="fecha_salida">Fecha Salida</label>
                             </div>
                             <div class="form-floating me-2">
@@ -115,105 +120,19 @@
                 </div>
             </div>
         </div>
-        <div>
-            <?php foreach ($rooms as $room): ?>
-                <div class="row">
-                    <div class="col">
-                        <div class="card mb-2 custom-card">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="<?= base_url('images/rooms/' . $room['id'] . '/room.jpg') ?>"
-                                         class="img-fluid rounded-start custom-height" alt="Imagen habitación">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h4 class="card-title font-titles"><?= $room['name']; ?></h4>
-                                        <p class="card-text"><?= $room['description']; ?></p>
-                                        <div class="card-text mb-4">
-                                            <small class="text-muted"><?= $room['meters']; ?> m <sup>2</sup></small>
-                                            <span class="divider"></span>
-                                            <small class="text-muted">Ocupación máx.: <?= $room['people']; ?></small>
-                                            <span class="divider"></span>
-                                            <small class="text-muted"><?= $room['category']; ?></small>
-                                        </div>
-                                        <div class="card-text">
-                                            <div class="row mb-2">
-                                                <?php if ($room['wifi']): ?>
-                                                    <div class="col-md-3">
-                                                        <i class="fa-solid fa-wifi"></i>
-                                                        <small>Conexión Wi-fi </small>
-                                                    </div>
-                                                <?php endif; ?>
-                                                <?php if ($room['television']): ?>
-                                                    <div class="col-md-3">
-                                                        <i class="fa-solid fa-tv"></i>
-                                                        <small>Televisión</small>
-                                                    </div>
-                                                <?php endif; ?>
-                                                <?php if ($room['air_conditioning']): ?>
-                                                    <div class="col-md-3">
-                                                        <i class="ti ti-snowflake"></i>
-                                                        <small>Aire Acondicionado</small>
-                                                    </div>
-                                                <?php endif; ?>
-                                                <?php if ($room['minibar']): ?>
-                                                     <div class="col-md-3">
-                                                        <i class="ti ti-fridge"></i>
-                                                        <small>Minibar</small>
-                                                     </div>
-                                                <?php endif; ?>
-                                                <?php if ($room['hair_dryer']): ?>
-                                                    <div class="col-md-3">
-                                                        <img src="<?= base_url('images/icons/hair_dryer.svg')?>" alt="icon hair" class="icons">
-                                                        <small>Secador de pelo</small>
-                                                    </div>
-                                                <?php endif; ?>
-
-                                            </div>
-                                            <div class="row mb-4">
-                                                <div class="col-md-12">
-                                                    Todas las habitaciones contienen:
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <i class="ti ti-device-landline-phone"></i>
-                                                    <small>Teléfono</small>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <img src="<?= base_url('images/icons/security_box.svg')?>" alt="icon security box" class="icons">
-                                                    <small>Caja de seguridad</small>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <img src="<?= base_url('images/icons/amenities.svg')?>" alt="icon amenities" class="icons">
-                                                    <small>Amenities</small>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <i class="ti ti-ironing-1"></i>
-                                                    <small>Plancha (bajo petición)</small>
-                                                </div>
-                                            </div>
-                                            <div class="row justify-content-end align-items-center">
-                                                <div class="col-md-2">
-                                                    <span>
-                                                        <s class="me-3">
-                                                            <?= number_format($room['price'] * 1.10); ?>€
-                                                        </s>
-                                                        <?= $room['price']; ?> €
-                                                    </span>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <a href="<?= base_url('view_room/' . $room['id'])?>" class="btn btn-green w-100 show-room-btn"
-                                                            data-room-id="<?= $room['id']; ?>"
-                                                    >Ver</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <div id="loader" style="display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <div class="loader-content">
+                        <p>Cargando...</p>
+                        <div class="spinner"></div> <!-- Opcional: Agrega un spinner o animación -->
                     </div>
                 </div>
-            <?php endforeach; ?>
+            </div>
+
+        </div>
+        <div id="contenido-rooms">
+
         </div>
 
     </div>
@@ -265,36 +184,54 @@
             dateFormat: dateFormat
         });
 
-        $('#search_room_form').on('submit', function(e) {
+        getRooms()
+
+        $('#filter_room_form').on('submit', function(e) {
             e.preventDefault();
-
-            // Capturar los datos del formulario
-            let formData = {
-                fecha_entrada: $('#fecha_entrada').val(),
-                fecha_salida: $('#fecha_salida').val(),
-                personas: $('#personas').val()
-            };
-
 
             // Enviar los datos mediante AJAX
             $.ajax({
-                url: '/filter_room', // URL del backend que procesará los datos
-                type: 'POST',
-                data: formData,
-                dataType: 'json',
+                url: '/filter_room',
+                type: 'GET',
+                data: {
+                    fecha_entrada: $('#fecha_entrada').val(),
+                    fecha_salida: $('#fecha_salida').val(),
+                    personas: $('#personas').val(),
+                    category: $('#category').val(),
+                    min_price: $('#min_price').val(),
+                    max_price: $('#max_price').val()
+                },
+                beforeSend: function() {
+                    $('#loader').show();
+                    $('#contenido-rooms').html('')// Muestra el loader antes de enviar la solicitud
+                },
                 success: function(response) {
-                    if (response.success) {
-                        window.location.href = response.redirect;
-                    } else {
-                        $('#alert-msg').html('<div class="alert alert-danger">' + response.message + '</div>');
-                    }
+                    $('#contenido-rooms').html(response);
                 },
                 error: function() {
                     $('#alert-msg').html('<div class="alert alert-danger">Error en el envío de la reserva. Inténtalo de nuevo.</div>');
+                },
+                complete: function() {
+                    $('#loader').hide(); // Oculta el loader después de completar la solicitud
                 }
             });
         });
     });
+
+    function getRooms(){
+        console.log('entro')
+        $.ajax({
+            url: '/roomsWithoutFilters',
+            type: 'GET',
+            success: function(response) {
+                console.log('esto es el success')
+                $('#contenido-rooms').html(response);
+            },
+            error: function() {
+                $('#alert-msg').html('<div class="alert alert-danger">Error en el envío de la reserva. Inténtalo de nuevo.</div>');
+            }
+        });
+    }
 </script>
 </body>
 </html>

@@ -6,8 +6,9 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
-$routes->post('/filter_room', 'RoomController::filter_room');
+$routes->get('/filter_room', 'RoomController::filter_room');
 $routes->get('/rooms', 'RoomController::getAllRooms');
+$routes->get('/roomsWithoutFilters', 'RoomController::roomsWithoutFilters');
 $routes->get('/view_room/(:num)', 'RoomController::getRoomById/$1');
 
 /*Rutas de autenticación*/
