@@ -7,12 +7,12 @@ use App\Models\CategoriesRooms;
 use App\Models\Reservation;
 use App\Models\Room;
 use CodeIgniter\HTTP\ResponseInterface;
+use DateTime;
 
 class RoomController extends BaseController
 {
     public function filter_room()
     {
-        // Cargar el servicio request para obtener los datos
         $request = \Config\Services::request();
 
         // Obtener los datos enviados por el formulario
@@ -23,7 +23,6 @@ class RoomController extends BaseController
         $min_price = $request->getGet('min_price') ?? 0;
         $max_price = $request->getGet('max_price') ?? 500;
 
-        // Validar los datos recibidos (puedes ampliar estas validaciones)
         if (empty($fecha_entrada) || empty($fecha_salida) || empty($personas)) {
             return $this->response->setJSON([
                 'success' => false,
@@ -31,10 +30,14 @@ class RoomController extends BaseController
             ]);
         }
 
-        //Buscar las reservas entre los días que marca el usuario
-        //Si existe una reserva, la habitación no sale
-        //De las habitaciones sin reserva, se filtra por mayor o igual al numero de personas seleccionadas
-        //Se returnea a la vista de habitaciones pero con habitaciones reducidas
+        /*
+            Buscar las reservas entre los días que marca el usuario
+            Si existe una reserva, la habitación no sale
+            De las habitaciones sin reserva, se filtra por mayor o igual al numero de personas seleccionadas
+            Se incluyen los filtros del usuario que son opcionales
+            Se ordena de precio menor a mayor
+            Se mandan los datos al front
+        */
 
         $reservation = new Reservation();
 
@@ -109,8 +112,49 @@ class RoomController extends BaseController
     }
 
 
-    public function getRoomById($room_id)
+    public function bookingRoom($room_id)
     {
+        $request = \Config\Services::request();
 
+        $fecha_entrada = $request->getGet('checkin_date');
+        $fecha_salida = $request->getGet('checkout_date');
+        $personas = $request->getGet('guests');
+
+        $isBooking = false;
+
+        $format_fecha_entrada = date("Y-m-d", strtotime($fecha_entrada));
+        $format_fecha_salida = date("Y-m-d", strtotime($fecha_salida));
+
+        $reservationModel = new Reservation();
+        $reservation = $reservationModel->where('entry_date >=', $format_fecha_entrada)
+            ->where('departure_date <=', $format_fecha_salida)
+            ->where('id_room', $room_id)
+            ->first();
+
+        if ($reservation){
+            $isBooking = true;
+        }
+
+        $roomModel = new Room();
+        $room = $roomModel->select('rooms.*, categories_rooms.name as category')
+            ->join('categories_rooms', 'categories_rooms.id = rooms.id_category')
+            ->where('rooms.id', $room_id)
+            ->first();
+
+        $entrada = new DateTime(date("Y-d-m", strtotime($fecha_entrada)));
+        $salida = new DateTime(date("Y-d-m", strtotime($fecha_salida)));
+
+        // Calcular la diferencia
+        $diferencia = $entrada->diff($salida);
+        $diasDiferencia = $diferencia->days;
+
+        return view('rooms/booking_room', [
+            'room' => $room,
+            'fecha_entrada' => str_replace('/', '-', $fecha_entrada),
+            'fecha_salida' => str_replace('/', '-', $fecha_salida),
+            'personas' => $personas,
+            'isBooking' => $isBooking,
+            'diasDiferencia' => $diasDiferencia
+        ]);
     }
 }

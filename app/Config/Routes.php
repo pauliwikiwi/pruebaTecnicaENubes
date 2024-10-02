@@ -8,7 +8,9 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->get('/filter_room', 'RoomController::filter_room');
 $routes->get('/rooms', 'RoomController::getAllRooms');
-$routes->get('/view_room/(:num)', 'RoomController::getRoomById/$1');
+$routes->get('/booking_room/(:num)', 'RoomController::bookingRoom/$1');
+$routes->post('/reservation_room', 'ReservationController::reservationRoom');
+$routes->get('reservation/(:num)', 'ReservationController::getReservationById/$1');
 
 /*Rutas de autenticación*/
 $routes->get('/login', 'LoginController::index');
@@ -25,7 +27,6 @@ $routes->post('/updatePassword', 'ForgotPasswordController::save_new_password');
 
 $routes->group('user', ['filter' => 'auth'], function($routes) {
     $routes->get('dashboard', 'ReservationController::index');
-    $routes->get('reservation/(:num)', 'ReservationController::getReservationById/$1');
     $routes->get('reservation/edit/(:num)', 'ReservationController::editReservationById/$1');
     $routes->get('reservation/cancel/(:num)', 'ReservationController::cancelReservationById/$1');
     $routes->get('pdf/generate_reservation/(:num)', 'PdfController::generateReservationPDFById/$1');

@@ -38,8 +38,7 @@ class RegisterController extends BaseController
         // Hashear la contraseña
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // Crear el token de confirmación
-        $token = bin2hex(random_bytes(16)); // Generar token aleatorio
+        $token = bin2hex(random_bytes(16));
 
         // Guardar los datos del nuevo usuario en la base de datos
         $userModel->save([
@@ -47,8 +46,8 @@ class RegisterController extends BaseController
             'last_name' => $apellidos,
             'email' => $correo,
             'password' => $hashedPassword,
-            'email_token' => $token, // Guardar el token para confirmar el correo
-            'confirmed_email' => false, // Marcar como no confirmado// Guardar la contraseña hasheada
+            'email_token' => $token,
+            'confirmed_email' => false,
         ]);
 
         // Enviar el correo de confirmación

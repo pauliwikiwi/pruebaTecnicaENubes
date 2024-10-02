@@ -22,6 +22,16 @@ class CreateUsersTable extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => '100',
             ],
+            'contact_telephone' => [
+                'type' => 'VARCHAR',
+                'constraint' => '15',
+                'null' => true,
+            ],
+            'contact_identifier' => [
+                'type' => 'VARCHAR',
+                'constraint' => '15',
+                'null' => true,
+            ],
             'email' => [
                 'type' => 'VARCHAR',
                 'constraint' => '100',
@@ -29,6 +39,7 @@ class CreateUsersTable extends Migration
             'email_token' => [
                 'type' => 'VARCHAR',
                 'constraint' => '100',
+                'null' => true,
             ],
             'confirmed_email' => [
                 'type' => 'BOOLEAN',
@@ -37,10 +48,12 @@ class CreateUsersTable extends Migration
             'password' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
+                'null' => true,
             ],
             'reset_token' => [
                 'type' => 'VARCHAR',
                 'constraint' => '100',
+                'null' => true,
             ],
             'reset_token_expires' => [
                 'type' => 'DATETIME',

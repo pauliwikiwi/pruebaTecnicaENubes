@@ -221,17 +221,9 @@
                                                     </span>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <form method="get">
-                                                            <input type="hidden" class="booking_entry_date" value=" <?= $fecha_entrada ?>">
-                                                            <input type="hidden" class="booking_departure_date" value=" <?= $fecha_entrada ?>">
-                                                            <input type="hidden" class="booking_person" value=" <?= $personas ?>">
-                                                            <button
-                                                                    class="btn btn-green w-100 show-room-btn"
-                                                                    type="submit"
-                                                                    data-room-id="<?= $room['id']; ?>"
-                                                                    onclick="booking_room(<?= $room['id']; ?>)"
-                                                            >Reservar</button>
-                                                        </form>
+                                                        <a class="btn btn-green" href="<?= base_url('/booking_room/' . $room['id'] . '?checkin_date=' . $fecha_entrada . '&checkout_date=' . $fecha_salida . '&guests=' . $personas) ?>">
+                                                            Reservar
+                                                        </a>
 
                                                     </div>
                                                 </div>

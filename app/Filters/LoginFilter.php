@@ -26,7 +26,10 @@ class LoginFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         // Verifica si el usuario está autenticado
+        $session = session();
         if (!session()->get('logged_in')) {
+            // Guardar la URL actual en la sesión
+            $session->set('redirect_url', current_url());
             // Si no está autenticado, redirige al login
             return redirect()->to('/login');
         }

@@ -35,6 +35,8 @@ class LoginController extends BaseController
             ]);
         }
 
+        //TODO: Si la contraseña esta en null, que pida al usuario crear una contraseña
+
         // Verificar si el correo está confirmado
         if (!$usuario['confirmed_email']) {
             // Si el correo no está confirmado, impedir el login
@@ -63,9 +65,12 @@ class LoginController extends BaseController
         ]);
 
         // Retornar respuesta de éxito
+        $redirectUrl = $session->get('redirect_url') ? $session->get('redirect_url') : '/user/dashboard';
+        $session->remove('redirect_url');
+
         $response = [
             'success' => true,
-            'redirect' => '/user/dashboard'  // Redirigir a la página de destino
+            'redirect' => $redirectUrl  // Redirigir a la página de destino
         ];
 
         return $this->response->setJSON($response);
@@ -74,6 +79,7 @@ class LoginController extends BaseController
 
     public function logout()
     {
+        $redirect_url =  current_url();
         $session = session();
         $session->destroy(); // Elimina la sesión del usuario
 

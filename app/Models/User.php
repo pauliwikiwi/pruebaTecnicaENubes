@@ -16,6 +16,8 @@ class User extends Model
         'id',
         'name',
         'last_name',
+        'contact_telephone',
+        'contact_identifier',
         'email',
         'email_token',
         'confirmed_email',
