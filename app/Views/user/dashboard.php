@@ -72,6 +72,20 @@
         </div>
     </nav>
     <div class="container mt-5">
+        <div id="loader" style="display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <div class="loader-content">
+                        <p>Cargando...</p>
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div id="alert-msg"></div>
+        </div>
         <?php foreach ($reservations as $reservation): ?>
             <?php
             // Definir las fechas
@@ -90,16 +104,16 @@
                 <div class="col-12">
                     <div class="card card-reservation mb-3">
                         <div class="row">
-                            <div class="col-2 d-flex justify-content-center align-items-center">
+                            <div class="col-md-2 mt-sm-5 d-flex justify-content-center align-items-center">
                                 <img src="<?= base_url('images/rooms/' . $reservation['id_room'] . '/room.jpg') ?>"
                                      alt="" width="150px" height="150px" style="object-fit: cover; border-radius: 20px">
                             </div>
-                            <div class="col-10">
+                            <div class="col-md-10">
                                 <div class="card-body">
                                     <div class="card-title">
                                         <h5 class="d-flex justify-content-between">
                                             <span><?= $reservation['name']; ?></span><span
-                                                    class="badge rounded-pill bg-secondary"> <?= $reservation['status']; ?></span>
+                                                    class="badge custom-pill rounded-pill bg-<?=$reservation['code']?>"> <?= $reservation['status']; ?></span>
                                         </h5>
                                         <p> <?= date("d/m/Y", strtotime($reservation['entry_date'])); ?>
                                             - <?= date("d/m/Y", strtotime($reservation['departure_date'])); ?></p>
@@ -122,10 +136,10 @@
                                                     Ver
                                                 </a>
                                                  <?php if ($reservation['status'] != 'Cancelada'):?>
-                                                <a class="btn btn-green me-2"
-                                                   href="<?= base_url('user/reservation/edit/' . $reservation['id_reservation']) ?> disabled">
+                                                <!--<a class="btn btn-green me-2"
+                                                   href="<?php /*= base_url('user/reservation/edit/' . $reservation['id_reservation']) */?>" >
                                                     Modificar reserva
-                                                </a>
+                                                </a>-->
                                                 <button class="btn btn-danger me-2" id="cancel-reservation"
                                                         onclick="cancelReservation(<?= $reservation['id_reservation']; ?>)">
                                                     Cancelar
@@ -153,16 +167,22 @@
     function cancelReservation(id) {
         let id_reservation = id;
         $.ajax({
-            url: '/user/reservation/cancel/' + id, // Agrega el parámetro a la URL
+            url: '/user/reservation/cancel/' + id,
             type: 'GET',
-            dataType: 'json', // Esperamos un JSON de respuesta
+            dataType: 'json',
+            beforeSend: function() {
+                $('#loader').show();
+            },
             success: function (data) {
-                // Procesar datos recibidos
                 location.reload()
             },
             error: function (xhr, status, error) {
                 // Manejo de errores
-                $('#result').html('Error: ' + error);
+                $('#loader').hide();
+                $('#alert-msg').html('<div class="alert alert-danger">Ha habido un error. Inténtalo de nuevo.</div>');
+            },
+            complete:function (){
+                $('#loader').hide();
             }
         });
     }

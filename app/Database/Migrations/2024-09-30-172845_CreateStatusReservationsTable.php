@@ -18,6 +18,10 @@ class CreateStatusReservationsTable extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '100',
             ],
+            'abbreviation' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '5',
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,

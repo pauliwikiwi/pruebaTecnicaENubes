@@ -11,27 +11,33 @@ class StatusReservationSeeder extends Seeder
         $status_reservation = [
             [
                 'id' => 1,
-                'name' => 'Pendiente de confirmación'
+                'name' => 'Pendiente de confirmación',
+                'abbreviation' => 'PEND'
             ],
             [
                 'id' => 2,
-                'name' => 'Confirmada'
+                'name' => 'Confirmada',
+                'abbreviation' => 'CONF'
             ],
             [
                 'id' => 3,
-                'name' => 'Cancelada'
+                'name' => 'Cancelada',
+                'abbreviation' => 'CANC'
             ],
             [
                 'id' => 4,
-                'name' => 'En estancia'
+                'name' => 'En estancia',
+                'abbreviation' => 'ESTA'
             ],
             [
                 'id' => 5,
-                'name' => 'Finalizada'
+                'name' => 'Finalizada',
+                'abbreviation' => 'FIN'
             ],
             [
                 'id' => 6,
-                'name' => 'Modificada'
+                'name' => 'Modificada',
+                'abbreviation' => 'MOD'
             ],
         ];
         $this->db->table('status_reservations')->insertBatch($status_reservation);

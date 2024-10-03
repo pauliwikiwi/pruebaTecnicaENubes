@@ -35,7 +35,17 @@ class LoginController extends BaseController
             ]);
         }
 
-        //TODO: Si la contraseña esta en null, que pida al usuario crear una contraseña
+
+        if ($usuario['password'] == null) {
+            //TODO: Mandar al usuario a una pagina de reestablecer contraseña
+            $token = bin2hex(random_bytes(50));
+            $userModel->update($usuario['id'], ['reset_token' => $token, 'reset_token_expires' => date('Y-m-d H:i:s', strtotime('+1 hour'))]);
+            $resetLink = "/forgot_password/reset_password?token=" . $token;
+            $response = [
+                'success' => true,
+                'redirect' => $resetLink  // Redirigir a la página de destino
+            ];
+        }
 
         // Verificar si el correo está confirmado
         if (!$usuario['confirmed_email']) {

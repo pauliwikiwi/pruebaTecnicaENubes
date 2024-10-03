@@ -19,7 +19,7 @@ class ReservationController extends BaseController
             $email = $session->get('usuario_email');
         }
 
-        $reservations = $reservationModel->select('reservations.*, reservations.id as id_reservation, rooms.*, status_reservations.name as status')
+        $reservations = $reservationModel->select('reservations.*, reservations.id as id_reservation, rooms.*, status_reservations.name as status, status_reservations.abbreviation as code')
             ->join('users', 'users.id = reservations.id_user')
             ->join('rooms', 'rooms.id = reservations.id_room')
             ->join('status_reservations', 'status_reservations.id = reservations.id_status')

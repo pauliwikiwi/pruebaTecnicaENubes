@@ -12,7 +12,7 @@ class StatusReservations extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'name'];
+    protected $allowedFields    = ['id', 'name', 'abbreviation'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
