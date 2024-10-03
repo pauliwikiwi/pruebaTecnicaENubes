@@ -97,8 +97,8 @@ class RoomController extends BaseController
         $rooms = $room->getHabitacionesConCategorias();
         $categories = $categories->findAll();
 
-        $fecha_entrada = date('d-m-Y');
-        $fecha_salida = date('d-m-Y', strtotime('+1 day'));
+        $fecha_entrada = strtotime('today')*1000;
+        $fecha_salida = strtotime('tomorrow')*1000;
         $personas = 2;
 
         // Pasamos los datos a la vista
@@ -111,19 +111,19 @@ class RoomController extends BaseController
         ]);
     }
 
-
     public function bookingRoom($room_id)
     {
         $request = \Config\Services::request();
 
-        $fecha_entrada = $request->getGet('checkin_date');
-        $fecha_salida = $request->getGet('checkout_date');
-        $personas = $request->getGet('guests');
+        $checkin = $request->getGet('checkin_date');
+        $checkout = $request->getGet('checkout_date');
+        $people = $request->getGet('guests');
 
         $isBooking = false;
 
-        $format_fecha_entrada = date("Y-m-d", strtotime($fecha_entrada));
-        $format_fecha_salida = date("Y-m-d", strtotime($fecha_salida));
+        $format_fecha_entrada = date('Y-m-d', $checkin / 1000);
+        $format_fecha_salida = date('Y-m-d', $checkout / 1000);
+
 
         $reservationModel = new Reservation();
         $reservation = $reservationModel->where('entry_date >=', $format_fecha_entrada)
@@ -141,18 +141,20 @@ class RoomController extends BaseController
             ->where('rooms.id', $room_id)
             ->first();
 
-        $entrada = new DateTime(date("Y-d-m", strtotime($fecha_entrada)));
-        $salida = new DateTime(date("Y-d-m", strtotime($fecha_salida)));
+
 
         // Calcular la diferencia
+        $entrada = new DateTime($format_fecha_entrada);
+        $salida = new DateTime($format_fecha_salida);
+
         $diferencia = $entrada->diff($salida);
         $diasDiferencia = $diferencia->days;
 
         return view('rooms/booking_room', [
             'room' => $room,
-            'fecha_entrada' => str_replace('/', '-', $fecha_entrada),
-            'fecha_salida' => str_replace('/', '-', $fecha_salida),
-            'personas' => $personas,
+            'fecha_entrada' => date('d/m/Y', $checkin / 1000),
+            'fecha_salida' => date('d/m/Y', $checkout / 1000),
+            'personas' => $people,
             'isBooking' => $isBooking,
             'diasDiferencia' => $diasDiferencia
         ]);

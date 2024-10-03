@@ -88,7 +88,7 @@
             ?>
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-reservation">
+                    <div class="card card-reservation mb-3">
                         <div class="row">
                             <div class="col-2 d-flex justify-content-center align-items-center">
                                 <img src="<?= base_url('images/rooms/' . $reservation['id_room'] . '/room.jpg') ?>"
@@ -123,7 +123,7 @@
                                                 </a>
                                                  <?php if ($reservation['status'] != 'Cancelada'):?>
                                                 <a class="btn btn-green me-2"
-                                                   href="<?= base_url('user/reservation/edit/' . $reservation['id_reservation']) ?>">
+                                                   href="<?= base_url('user/reservation/edit/' . $reservation['id_reservation']) ?> disabled">
                                                     Modificar reserva
                                                 </a>
                                                 <button class="btn btn-danger me-2" id="cancel-reservation"

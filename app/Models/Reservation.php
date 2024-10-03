@@ -12,7 +12,7 @@ class Reservation extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'id_user', 'id_room', 'id_status', 'entry_date', 'departure_date', 'created_at', 'updated_at'];
+    protected $allowedFields    = ['id', 'id_user', 'id_room', 'id_status', 'entry_date', 'reservation_token', 'confirmed', 'departure_date', 'created_at', 'updated_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

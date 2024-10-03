@@ -74,7 +74,7 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-3">
-                <form id="filter_disponiility" method="get">
+                <form id="filter_availability" method="get">
                     <input type="hidden" id="fecha_seleccionada_entrada" name="fecha_seleccionada_entrada" value="<?= $fecha_entrada?>">
                     <input type="hidden" id="fecha_seleccionada_salida" name="fecha_seleccionada_salida" value="<?= $fecha_salida?>">
                     <input type="hidden" id="id_room" name="id_room" value="<?= $room['id']?>">
@@ -94,6 +94,18 @@
                 </form>
             </div>
             <div class="col-md-9">
+                <div id="alert-msg"></div>
+                <div id="loader" style="display: none;">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="loader-content">
+                                <p>Cargando...</p>
+                                <div class="spinner"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="card p-3">
                     <div class="row">
                         <div class="col-2">
@@ -288,7 +300,7 @@
                     </div>
                     <div class="row mt-3 justify-content-end">
                         <div class="col-md-3">
-                            <button class="btn btn-green w-100" id="button-booking">
+                            <button class="btn btn-green w-100" id="button-booking" <?php if ($isBooking): ?> disabled <?php endif; ?>>
                                 Reservar
                             </button>
                         </div>
@@ -307,7 +319,6 @@
 <!-- jQuery UI -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-    // Configurar el idioma español para el datepicker
     $.datepicker.setDefaults($.datepicker.regional['es'] = {
         closeText: 'Cerrar',
         prevText: 'Anterior',
@@ -331,13 +342,12 @@
         let dateFormat = 'dd/mm/yy';
 
         function convertToDate(dateText) {
-            const parts = dateText.split('-');
-            // Crear una nueva fecha en el formato año, mes, día
+            const parts = dateText.split('/');
             return new Date(parts[2], parts[1] - 1, parts[0]);
         }
 
 
-        // Inicializar el datepicker en el campo de fecha de entrada
+        let setDateEntry = convertToDate($('#fecha_seleccionada_entrada').val())
         $('#fecha_reserva_entrada').datepicker({
             minDate: today,
             dateFormat: dateFormat,
@@ -348,27 +358,23 @@
                 $('#fecha_salida').datepicker('option', 'minDate', minDate);
             }
         });
-
-        let setDateEntry = convertToDate($('#fecha_seleccionada_entrada').val())
-        let setDateDeparture = convertToDate($('#fecha_seleccionada_salida').val())
-
         $('#fecha_reserva_entrada').datepicker("setDate", setDateEntry);
-        // Inicializar el datepicker en el campo de fecha de salida
+
+
+
+        let setDateDeparture = convertToDate($('#fecha_seleccionada_salida').val())
         $('#fecha_reserva_salida').datepicker({
             minDate: today,
             dateFormat: dateFormat
         });
-
         $('#fecha_reserva_salida').datepicker("setDate", setDateDeparture);
 
 
         $('#reservation-room-form').on('submit', function(e) {
-
-            console.log('entro aqui')
             e.preventDefault();
 
-            let reservation_entry_date = $('#fecha_reserva_entrada').val()
-            let reservation_departure_date = $('#fecha_reserva_salida').val()
+            let reservation_entry_date = convertToDate($('#fecha_reserva_entrada').val()).getTime()
+            let reservation_departure_date = convertToDate($('#fecha_reserva_salida').val()).getTime()
             let id_room = $('#id_room').val();
             let formData = $(this).serializeArray();
 
@@ -383,14 +389,51 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.success) {
-                        $('#alert-msg').html('<div class="alert alert-success">' + response.message + '</div>');
-                        $('#register-form')[0].reset();
+                        window.location.href = response.redirect;
                     } else {
                         $('#alert-msg').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
                 },
                 error: function() {
-                    $('#alert-msg').html('<div class="alert alert-danger">Error en el registro, inténtalo de nuevo.</div>');
+                    $('#alert-msg').html('<div class="alert alert-danger">Ha habido un error. Inténtalo de nuevo.</div>');
+                }
+
+            });
+
+        });
+
+        $('#filter_availability').on('submit', function (e){
+            e.preventDefault();
+
+            let id_room = $('#id_room').val();
+            $.ajax({
+                url: '/check_availability/' + id_room,
+                type: 'GET',
+                data: {
+                    checkin:  convertToDate($('#fecha_reserva_entrada').val()).getTime(),
+                    checkout:  convertToDate($('#fecha_reserva_salida').val()).getTime(),
+                },
+                dataType: 'json',
+                beforeSend: function() {
+                    $('#loader').show();
+                },
+                success: function(response) {
+                    if (response.success) {
+                        if (response.isBooking){
+                            $("#button-booking").prop("disabled",true);
+                            $('#alert-msg').html('<div class="alert alert-danger">La habitación no esta disponible en esas fechas. Inténtalo de nuevo.</div>');
+                        }else{
+                            $("#button-booking").prop("disabled",false);
+                            $('#alert-msg').css('display','none')
+                        }
+                    }
+                },
+                error: function() {
+                    $('#loader').hide();
+                    $('#alert-msg').html('<div class="alert alert-danger">Ha habido un error. Inténtalo de nuevo.</div>');
+                },
+                complete:function (){
+                    $('#loader').hide();
                 }
 
             });

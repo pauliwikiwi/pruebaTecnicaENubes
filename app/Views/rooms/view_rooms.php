@@ -131,6 +131,7 @@
             </div>
 
         </div>
+        <div id="alert-msg"></div>
         <div id="contenido-rooms">
             <div>
                 <?php foreach ($rooms as $room): ?>
@@ -271,13 +272,12 @@
         let dateFormat = 'dd/mm/yy';
 
         function convertToDate(dateText) {
+            console.log('covert string to data' , dateText)
             const parts = dateText.split('/');
-            // Crear una nueva fecha en el formato año, mes, día
             return new Date(parts[2], parts[1] - 1, parts[0]);
         }
 
 
-        // Inicializar el datepicker en el campo de fecha de entrada
         $('#fecha_entrada').datepicker({
             minDate: today,
             dateFormat: dateFormat,
@@ -287,7 +287,7 @@
                     selectedDate = convertToDate(dateText);
                 }
                 let minDate = new Date(selectedDate.getTime());
-                minDate.setDate(minDate.getDate() + 1);  // Añadir un día a la fecha de entrada
+                minDate.setDate(minDate.getDate() + 1);
                 $('#fecha_salida').datepicker('option', 'minDate', minDate);
             }
         });
@@ -300,13 +300,12 @@
         $('#filter_room_form').on('submit', function(e) {
             e.preventDefault();
 
-            // Enviar los datos mediante AJAX
             $.ajax({
                 url: '/filter_room',
                 type: 'GET',
                 data: {
-                    fecha_entrada: $('#fecha_entrada').val(),
-                    fecha_salida: $('#fecha_salida').val(),
+                    fecha_entrada: convertToDate($('#fecha_entrada').val()).getTime(),
+                    fecha_salida: convertToDate($('#fecha_salida').val()).getTime(),
                     personas: $('#personas').val(),
                     category: $('#category').val(),
                     min_price: $('#min_price').val(),
@@ -318,7 +317,6 @@
                 },
                 success: function(response) {
                     $('#contenido-rooms').html(response);
-                    // Reinicializar el datepicker en los nuevos elementos
                     $('#fecha_entrada').datepicker({
                         minDate: today,
                         dateFormat: dateFormat,
@@ -339,10 +337,11 @@
                     });
                 },
                 error: function() {
-                    $('#alert-msg').html('<div class="alert alert-danger">Error en el envío de la reserva. Inténtalo de nuevo.</div>');
+                    $('#loader').hide();
+                    $('#alert-msg').html('<div class="alert alert-danger">Ha habido un error. Inténtalo de nuevo.</div>');
                 },
                 complete: function() {
-                    $('#loader').hide(); // Oculta el loader después de completar la solicitud
+                    $('#loader').hide();
                 }
             });
         });

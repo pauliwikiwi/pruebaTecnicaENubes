@@ -40,15 +40,28 @@ class RegisterController extends BaseController
 
         $token = bin2hex(random_bytes(16));
 
+
         // Guardar los datos del nuevo usuario en la base de datos
-        $userModel->save([
-            'name' => $nombre,
-            'last_name' => $apellidos,
-            'email' => $correo,
-            'password' => $hashedPassword,
-            'email_token' => $token,
-            'confirmed_email' => false,
-        ]);
+
+        if (getenv('CI_ENVIRONMENT') === 'development'){
+            $userModel->save([
+                'name' => $nombre,
+                'last_name' => $apellidos,
+                'email' => $correo,
+                'password' => $hashedPassword,
+                'email_token' => null,
+                'confirmed_email' => true,
+            ]);
+        }else{
+            $userModel->save([
+                'name' => $nombre,
+                'last_name' => $apellidos,
+                'email' => $correo,
+                'password' => $hashedPassword,
+                'email_token' => $token,
+                'confirmed_email' => false,
+            ]);
+        }
 
         // Enviar el correo de confirmación
         $this->enviarCorreoConfirmacion($correo, $token);
@@ -97,6 +110,7 @@ class RegisterController extends BaseController
                 'token' => null // Eliminar el token
             ]);
 
+            //TODO: Mandar a vista de correo confirmado correctamente
             echo 'Correo confirmado exitosamente.';
         } else {
             echo 'Token no válido o expirado.';

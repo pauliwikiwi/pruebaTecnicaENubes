@@ -11,6 +11,8 @@ $routes->get('/rooms', 'RoomController::getAllRooms');
 $routes->get('/booking_room/(:num)', 'RoomController::bookingRoom/$1');
 $routes->post('/reservation_room', 'ReservationController::reservationRoom');
 $routes->get('reservation/(:num)', 'ReservationController::getReservationById/$1');
+$routes->get('check_availability/(:num)', 'ReservationController::checkAvailability/$1');
+$routes->get('confirm_reservation/(:any)', 'ReservationController::confirmReservation/$1');
 
 /*Rutas de autenticación*/
 $routes->get('/login', 'LoginController::index');
