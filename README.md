@@ -126,9 +126,10 @@ Una vez descargado, desde Docker Desktop configuraremos un contenedor php para p
 ## Setup
 ### Setup MySQL
 Entramos en el contenedor de Mysql desde el nombre y una vez dentro del contenedor haremos click sobre `exec`.
+
 ![img_6.png](img_6.png)
 
-Escribiremos `mysql  mysql -h localhost -u root -p` y nos pedirá insertar la contraseña que hayamos puesto al
+Escribiremos `mysql -h localhost -u root -p` y nos pedirá insertar la contraseña que hayamos puesto al
 configurar el contenedor de docker.
 
 Crearemos una base de datos con el nombre que queramos `CREATE DATABASE hotel`.
