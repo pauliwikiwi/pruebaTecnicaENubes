@@ -15,7 +15,7 @@ class RoomController extends BaseController
     {
         $request = \Config\Services::request();
 
-        // Obtener los datos enviados por el formulario
+
         $fecha_entrada = $request->getGet('fecha_entrada');
         $fecha_salida = $request->getGet('fecha_salida');
         $personas = $request->getGet('personas') ?? 2;
@@ -89,11 +89,11 @@ class RoomController extends BaseController
 
     public function getAllRooms()
     {
-        // Instanciamos el modelo de habitaciones
+
         $room = new Room();
         $categories = new CategoriesRooms();
 
-        // Obtenemos todas las habitaciones con sus respectivas categorías
+
         $rooms = $room->getHabitacionesConCategorias();
         $categories = $categories->findAll();
 
@@ -101,7 +101,6 @@ class RoomController extends BaseController
         $fecha_salida = strtotime('tomorrow')*1000;
         $personas = 2;
 
-        // Pasamos los datos a la vista
         return view('rooms/view_rooms', [
             'rooms' => $rooms,
             'categories' => $categories,

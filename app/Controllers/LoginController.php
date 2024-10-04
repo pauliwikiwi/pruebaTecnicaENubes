@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\User;
 use CodeIgniter\HTTP\ResponseInterface;
+use Random\RandomException;
 
 class LoginController extends BaseController
 {
@@ -13,22 +14,20 @@ class LoginController extends BaseController
         return view('auth/login');
     }
 
+    /**
+     * @throws \ReflectionException
+     * @throws RandomException
+     */
     public function authenticate()
     {
-        // Instancia del modelo
-        $userModel = new User();
-
-        // Obtener los datos del formulario
         $request = \Config\Services::request();
         $mail = $request->getPost('mail');
         $password = $request->getPost('password');
 
-        // Buscar el usuario por su nombre de usuario
+        $userModel = new User();
         $usuario = $userModel->getUserByMail($mail);
 
-        // Verificar si el usuario existe
         if (!$usuario) {
-            // Usuario no encontrado
             return $this->response->setJSON([
                 'success' => false,
                 'message' => 'Correo electrónico o contraseña incorrectos.'
@@ -43,22 +42,19 @@ class LoginController extends BaseController
             $resetLink = "/forgot_password/reset_password?token=" . $token;
             $response = [
                 'success' => true,
-                'redirect' => $resetLink  // Redirigir a la página de destino
+                'redirect' => $resetLink
             ];
         }
 
-        // Verificar si el correo está confirmado
         if (!$usuario['confirmed_email']) {
-            // Si el correo no está confirmado, impedir el login
             return $this->response->setJSON([
                 'success' => false,
                 'message' => 'Por favor, confirma tu correo electrónico antes de iniciar sesión.'
             ]);
         }
 
-        // Verificar la contraseña
+
         if (!password_verify($password, $usuario['password'])) {
-            // Contraseña incorrecta
             return $this->response->setJSON([
                 'success' => false,
                 'message' => 'Correo electrónico o contraseña incorrectos.'
@@ -74,13 +70,12 @@ class LoginController extends BaseController
             'logged_in' => true
         ]);
 
-        // Retornar respuesta de éxito
         $redirectUrl = $session->get('redirect_url') ? $session->get('redirect_url') : '/user/dashboard';
         $session->remove('redirect_url');
 
         $response = [
             'success' => true,
-            'redirect' => $redirectUrl  // Redirigir a la página de destino
+            'redirect' => $redirectUrl
         ];
 
         return $this->response->setJSON($response);
@@ -89,10 +84,9 @@ class LoginController extends BaseController
 
     public function logout()
     {
-        $redirect_url =  current_url();
         $session = session();
-        $session->destroy(); // Elimina la sesión del usuario
+        $session->destroy();
 
-        return redirect()->to('/'); // Redirige a la página de login o a donde desees
+        return redirect()->to('/');
     }
 }

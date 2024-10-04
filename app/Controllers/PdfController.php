@@ -24,22 +24,15 @@ class PdfController extends BaseController
             'reservation' => $reservation
         ];
 
-        // Cargar la vista y pasarle los datos
         $html = view('reservation/view_reservation_pdf', $data);
 
-        // Crear una instancia de Dompdf
+
         $dompdf = new Dompdf();
-
-        // Cargar el contenido HTML
         $dompdf->loadHtml($html);
-
-        // (Opcional) Configura el tamaño y la orientación de la página
         $dompdf->setPaper('A4', 'portrait');
-
-        // Renderiza el PDF
         $dompdf->render();
 
-        // Enviar el PDF al navegador
+
         $dompdf->stream('documento.pdf', ['Attachment' => true]);
     }
 

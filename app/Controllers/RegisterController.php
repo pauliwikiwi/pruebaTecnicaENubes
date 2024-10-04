@@ -15,7 +15,7 @@ class RegisterController extends BaseController
 
     public function save()
     {
-        // Instancia del modelo de usuario
+
         $userModel = new User();
 
         // Obtener los datos del formulario
@@ -26,7 +26,7 @@ class RegisterController extends BaseController
         $password = $request->getPost('password');
 
 
-        // Validar si el correo ya existe
+
         $existingUser = $userModel->where('email', $correo)->first();
         if ($existingUser) {
             return $this->response->setJSON([
@@ -35,13 +35,11 @@ class RegisterController extends BaseController
             ]);
         }
 
-        // Hashear la contraseña
+
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         $token = bin2hex(random_bytes(16));
 
-
-        // Guardar los datos del nuevo usuario en la base de datos
 
         if (getenv('CI_ENVIRONMENT') === 'development'){
             $userModel->save([
@@ -83,12 +81,10 @@ class RegisterController extends BaseController
         // Crear la URL de confirmación
         $confirmUrl = base_url() . 'confirm_email/' . $token;
 
-        // Cargar la vista del correo
         $message = view('emails/confirmation_email', ['confirmUrl' => $confirmUrl]);
 
         $emailService->setMessage($message);
 
-        // Enviar el correo
         if ($emailService->send()) {
             log_message('info', 'Correo de confirmación enviado a ' . $email);
         } else {
@@ -100,14 +96,13 @@ class RegisterController extends BaseController
     {
         $usuarioModel = new User();
 
-        // Buscar al usuario por el token
         $usuario = $usuarioModel->where('token', $token)->first();
 
         if ($usuario) {
-            // Confirmar el correo actualizando el campo email_confirmado
+
             $usuarioModel->update($usuario['id'], [
                 'email_confirmado' => true,
-                'token' => null // Eliminar el token
+                'token' => null
             ]);
 
             //TODO: Mandar a vista de correo confirmado correctamente

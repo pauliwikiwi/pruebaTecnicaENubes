@@ -52,7 +52,7 @@ class ReservationController extends BaseController
         $data = ['id_status' => $status['id']];
         $reservationModel->update($id_reservation, $data);
 
-        // Responde con éxito
+
         return $this->response->setStatusCode(ResponseInterface::HTTP_OK)
             ->setJSON(['success' => true, 'message' => 'Estado actualizado']);
 
@@ -86,7 +86,7 @@ class ReservationController extends BaseController
          * TODO: validaciones en los campos
          */
 
-        //Buscamos el usuario y sino, se crea
+        //Buscamos el usuario y si no existe en la base de datos se crea
         $userModel = new User();
 
         $existingUser = $userModel->where('email', $email)->first();
@@ -162,7 +162,7 @@ class ReservationController extends BaseController
 
         $response = [
             'success' => true,
-            'redirect' => '/reservation/' . $reservationModel->getInsertID()  // Redirigir a la página de destino
+            'redirect' => '/reservation/' . $reservationModel->getInsertID()
         ];
 
         return $this->response->setJSON($response);
@@ -173,7 +173,7 @@ class ReservationController extends BaseController
 
         $urlCambiarEstado = base_url("confirm_reservation/$reservation_token");
 
-        // Crear el contenido del correo
+
         $asunto = "Confirmación de Reserva";
         $mensaje = "
             <html lang='es'>
@@ -191,7 +191,7 @@ class ReservationController extends BaseController
                     <li><strong>Teléfono:</strong> $phone</li>
                     <li><strong>Identificación:</strong> $identification</li>
                 </ul>
-                <p>Para cambiar el estado de tu reserva, haz clic en el siguiente enlace:</p>
+                <p>Para confirmar tu reserva, haz clic en el siguiente enlace:</p>
                 <p><a href='$urlCambiarEstado'>Cambiar estado de la reserva</a></p>
                 <p>Si tienes alguna pregunta, no dudes en contactarnos.</p>
                 <p>¡Gracias por elegirnos!</p>
@@ -199,7 +199,7 @@ class ReservationController extends BaseController
             </html>
         ";
 
-        // Configurar el servicio de email
+
         $emailService = \Config\Services::email();
         $emailService->setTo($email);
         $emailService->setFrom('noreply@hotelpaula.com', 'Hotel Paula');
@@ -207,7 +207,7 @@ class ReservationController extends BaseController
         $emailService->setMessage($mensaje);
         $emailService->setHeader('Content-Type', 'text/html');
 
-        // Enviar el correo
+
         if ($emailService->send()) {
             echo "Correo de confirmación enviado a $email.";
         } else {

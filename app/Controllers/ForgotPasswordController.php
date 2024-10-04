@@ -19,7 +19,6 @@ class ForgotPasswordController extends BaseController
         $request = \Config\Services::request();
         $email = $request->getPost('mail');
 
-        // Verificar si el correo existe
         $user = $userModel->where('email', $email)->first();
         if (!$user) {
             return $this->response->setJSON([
@@ -32,7 +31,7 @@ class ForgotPasswordController extends BaseController
         $token = bin2hex(random_bytes(50));  // Genera un token único
         $userModel->update($user['id'], ['reset_token' => $token, 'reset_token_expires' => date('Y-m-d H:i:s', strtotime('+1 hour'))]);
 
-        // Crear el enlace de restablecimiento de contraseña
+
         $resetLink = base_url() . "/forgot_password/reset_password?token=" . $token;
 
         // Enviar el correo electrónico
