@@ -23,7 +23,7 @@
 <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
         <div class="container-fluid">
-            <a class="navbar-brand font-titles" href="#">Hotel Paula</a>
+            <a class="navbar-brand font-titles" href="<?= base_url('/') ?>">Hotel Paula</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                     aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -37,7 +37,7 @@
                         <a class="nav-link" href="<?= base_url('/rooms') ?>">Habitaciones</a>
                     </li>
                 </ul>
-                <a class="nav-link custom-active" aria-current="page" href="#">
+                <a class="nav-link ps-0 custom-active" aria-current="page" href="#">
                     <i class="fa-regular fa-user"></i>
                     <span class="navbar-text">
                         Iniciar Sesión
@@ -51,28 +51,33 @@
         <div class="col p-0">
             <div class="main-image">
                 <div class="dark-image w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                    <div class="card rounded-card shadow w-25">
-                        <div class="card-body">
-                            <div class="card-title mt-2 mb-3 text-center text-white">
-                                <h2 class="font-titles">Recuperar la contraseña</h2>
-                            </div>
-                            <div class="card-subtitle text-white">
-                                <p>
-                                    Introduce el email con el que te diste de alta y te enviaremos un correo con instrucciones para que recuperes tu contraseña.
-                                </p>
-                            </div>
-                            <div class="card-text p-3">
-                                <div id="alert-msg"></div>
-                                <form id="forgot-password-form">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="mail" name="mail" required>
-                                        <label for="mail" class="form-label">Email*</label>
+                    <div class="container">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-md-6">
+                                <div class="card rounded-card shadow">
+                                    <div class="card-body">
+                                        <div class="card-title mt-2 mb-3 text-center text-white">
+                                            <h2 class="font-titles">Recuperar la contraseña</h2>
+                                        </div>
+                                        <div class="card-subtitle text-white">
+                                            Introduce el email con el que te diste de alta y te enviaremos un correo con instrucciones para que recuperes tu contraseña.
+                                        </div>
+                                        <div class="card-text py-3">
+                                            <div id="alert-msg"></div>
+                                            <form id="forgot-password-form">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" id="mail" name="mail" required>
+                                                    <label for="mail" class="form-label">Email*</label>
+                                                </div>
+                                                <button type="submit" class="btn btn-outline-light w-100">Recuperar contraseña</button>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <button type="submit" class="btn btn-outline-light w-100">Recuperar contraseña</button>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

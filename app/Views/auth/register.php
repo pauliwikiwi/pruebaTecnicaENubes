@@ -31,7 +31,7 @@
 <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
         <div class="container-fluid">
-            <a class="navbar-brand font-titles" href="#">Hotel Paula</a>
+            <a class="navbar-brand font-titles" href="<?= base_url('/') ?>">Hotel Paula</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                     aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -45,7 +45,7 @@
                         <a class="nav-link" href="<?= base_url('/rooms') ?>">Habitaciones</a>
                     </li>
                 </ul>
-                <a class="nav-link custom-active" aria-current="page" href="#">
+                <a class="nav-link custom-active ps-0" aria-current="page" href="#">
                     <i class="fa-regular fa-user"></i>
                     <span class="navbar-text">
                         Iniciar Sesión
@@ -59,38 +59,44 @@
         <div class="col p-0">
             <div class="main-image">
                 <div class="dark-image w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                    <div class="card rounded-card shadow w-25">
-                        <div class="card-body">
-                            <div class="card-title mt-2 mb-3 text-center text-white">
-                                <h2 class="font-titles">Regístrate</h2>
-                            </div>
-                            <p class=" text-center card-subtitle mb-2 text-white">¿Ya tienes cuenta creada?
-                                <a class="text-white" href="<?= base_url('/login') ?>">Inicia Sesión</a></p>
-                            <div class="card-text p-3">
-                                <div id="alert-msg"></div>
-                                <form id="register-form">
-                                    <div class=" form-floating mb-3">
-                                        <input type="text" class="form-control" id="name" name="name" required>
-                                        <label for="name" class="form-label">Nombre*</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="lastname" name="lastname" required>
-                                        <label for="lastname" class="form-label">Apellidos*</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="mail" name="mail" required>
-                                        <label for="mail" class="form-label">Email*</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="password" class="form-control" id="password" name="password"
-                                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
-                                               title="La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&)"
-                                               required>
-                                        <label for="password" class="form-label" >Contraseña*</label>
+                    <div class="container">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-md-6">
+                                <div class="card rounded-card shadow">
+                                    <div class="card-body">
+                                        <div class="card-title mt-2 mb-3 text-center text-white">
+                                            <h2 class="font-titles">Regístrate</h2>
+                                        </div>
+                                        <p class=" text-center card-subtitle mb-2 text-white">¿Ya tienes cuenta creada?
+                                            <a class="text-white" href="<?= base_url('/login') ?>">Inicia Sesión</a></p>
+                                        <div class="card-text p-3">
+                                            <div id="alert-msg"></div>
+                                            <form id="register-form">
+                                                <div class=" form-floating mb-3">
+                                                    <input type="text" class="form-control" id="name" name="name" required>
+                                                    <label for="name" class="form-label">Nombre*</label>
+                                                </div>
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" id="lastname" name="lastname" required>
+                                                    <label for="lastname" class="form-label">Apellidos*</label>
+                                                </div>
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" id="mail" name="mail" required>
+                                                    <label for="mail" class="form-label">Email*</label>
+                                                </div>
+                                                <div class="form-floating mb-3">
+                                                    <input type="password" class="form-control" id="password" name="password"
+                                                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
+                                                           title="La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&)"
+                                                           required>
+                                                    <label for="password" class="form-label" >Contraseña*</label>
 
+                                                </div>
+                                                <button type="submit" class="btn btn-outline-light w-100">Crear cuenta</button>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <button type="submit" class="btn btn-outline-light w-100">Crear cuenta</button>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -102,50 +102,71 @@
             ?>
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-reservation mb-3">
+                    <div class="card p-3 card-reservation mb-3">
                         <div class="row">
-                            <div class="col-md-2 mt-sm-5 d-flex justify-content-center align-items-center">
+                            <div class="col-md-3 d-flex justify-content-center align-items-center">
                                 <img src="<?= base_url('images/rooms/' . $reservation['id_room'] . '/room.jpg') ?>"
                                      alt="" width="150px" height="150px" style="object-fit: cover; border-radius: 20px">
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                 <div class="card-body">
                                     <div class="card-title">
-                                        <h5 class="d-flex justify-content-between">
-                                            <span><?= $reservation['name']; ?></span><span
-                                                    class="badge custom-pill rounded-pill bg-<?=$reservation['code']?>"> <?= $reservation['status']; ?></span>
-                                        </h5>
-                                        <p> <?= date("d/m/Y", strtotime($reservation['entry_date'])); ?>
-                                            - <?= date("d/m/Y", strtotime($reservation['departure_date'])); ?></p>
+                                        <div class="row mb-2">
+                                            <div class="col-md-9">
+                                                <h5 class="font-titles"><?= $reservation['name']; ?></h5>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <span class="badge w-100 custom-pill rounded-pill bg-<?=$reservation['code']?>"> <?= $reservation['status']; ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p> <?= date("d/m/Y", strtotime($reservation['entry_date'])); ?>
+                                                    - <?= date("d/m/Y", strtotime($reservation['departure_date'])); ?></p>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="card-text">
-                                        <p>
-                                            Reserva para <?= $diasDiferencia; ?> noches
-                                        </p>
-                                        <div class="d-flex justify-content-between">
-                                            <span>Total: <?= $diasDiferencia * $reservation['price']; ?> €</span>
-                                            <span>
-                                                <a class="btn btn-green me-2"
-                                                   href="<?= base_url('user/pdf/generate_reservation/' . $reservation['id_reservation']) ?>">
-                                                    <span class="material-symbols-outlined">
-                                                    download
-                                                    </span>
-                                                </a>
-                                                <a class="btn btn-green me-2"
-                                                   href="<?= base_url('user/reservation/' . $reservation['id_reservation']) ?>">
-                                                    Ver
-                                                </a>
-                                                 <?php if ($reservation['status'] != 'Cancelada'):?>
-                                                <!--<a class="btn btn-green me-2"
-                                                   href="<?php /*= base_url('user/reservation/edit/' . $reservation['id_reservation']) */?>" >
-                                                    Modificar reserva
-                                                </a>-->
-                                                <button class="btn btn-danger me-2" id="cancel-reservation"
-                                                        onclick="cancelReservation(<?= $reservation['id_reservation']; ?>)">
-                                                    Cancelar
-                                                </button>
-                                                <?php endif; ?>
-                                            </span>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p>
+                                                    Reserva para <?= $diasDiferencia; ?> noches
+                                                </p>
+                                            </div>
+                                        </div>
+                                       <div class="row">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <span>Total: <?= $diasDiferencia * $reservation['price']; ?> €</span>
+                                                </div>
+                                            </div>
+                                       </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12 text-end">
+                                                <span>
+                                                    <a class="btn btn-green me-2"
+                                                       href="<?= base_url('user/pdf/generate_reservation/' . $reservation['id_reservation']) ?>">
+                                                        <span class="material-symbols-outlined">
+                                                        download
+                                                        </span>
+                                                    </a>
+                                                    <a class="btn btn-green me-2"
+                                                       href="<?= base_url('/reservation/' . $reservation['id_reservation']) ?>">
+                                                        Ver
+                                                    </a>
+                                                     <?php if ($reservation['status'] != 'Cancelada'):?>
+                                                         <!--<a class="btn btn-green me-2"
+                                                       href="<?php /*= base_url('user/reservation/edit/' . $reservation['id_reservation']) */?>" >
+                                                        Modificar reserva
+                                                    </a>-->
+                                                         <button class="btn btn-danger me-2" id="cancel-reservation"
+                                                                 onclick="cancelReservation(<?= $reservation['id_reservation']; ?>)">
+                                                        Cancelar
+                                                    </button>
+                                                     <?php endif; ?>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

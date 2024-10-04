@@ -23,7 +23,7 @@
 <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
         <div class="container-fluid">
-            <a class="navbar-brand font-titles" href="#">Hotel Paula</a>
+            <a class="navbar-brand font-titles" href="<?= base_url('/') ?>">Hotel Paula</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                     aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -37,7 +37,7 @@
                         <a class="nav-link" href="<?= base_url('/rooms') ?>">Habitaciones</a>
                     </li>
                 </ul>
-                <a class="nav-link custom-active" aria-current="page" href="#">
+                <a class="nav-link custom-active ps-0" aria-current="page" href="#">
                     <i class="fa-regular fa-user"></i>
                     <span class="navbar-text">
                         Iniciar Sesión
@@ -51,33 +51,39 @@
         <div class="col p-0">
             <div class="main-image">
                 <div class="dark-image w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                    <div class="card rounded-card shadow w-25">
-                        <div class="card-body">
-                            <div class="card-title mt-2 mb-3 text-center text-white">
-                                <h2 class="font-titles">Restablecer contraseña</h2>
-                            </div>
-                            <div class="card-text p-3">
-                                <div id="alert-msg"></div>
-                                <form id="reset-pasword-form">
-                                    <input type="hidden" name="token" id="token" value="<?= $token ?>">
-                                    <div class="form-floating mb-3">
-                                        <input type="password" class="form-control" id="password" name="password"
-                                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
-                                               title="La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&)"
-                                               required>
-                                        <label for="password" class="form-label" >Contraseña*</label>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card rounded-card shadow">
+                                    <div class="card-body">
+                                        <div class="card-title mt-2 mb-3 text-center text-white">
+                                            <h2 class="font-titles">Restablecer contraseña</h2>
+                                        </div>
+                                        <div class="card-text p-3">
+                                            <div id="alert-msg"></div>
+                                            <form id="reset-pasword-form">
+                                                <input type="hidden" name="token" id="token" value="<?= $token ?>">
+                                                <div class="form-floating mb-3">
+                                                    <input type="password" class="form-control" id="password" name="password"
+                                                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
+                                                           title="La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&)"
+                                                           required>
+                                                    <label for="password" class="form-label" >Contraseña*</label>
 
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="password" class="form-control" id="password_repeat" name="password_repeat"
-                                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
-                                               title="La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&)"
-                                               required>
-                                        <label for="password" class="form-label" >Repite la contraseña*</label>
-                                    </div>
+                                                </div>
+                                                <div class="form-floating mb-3">
+                                                    <input type="password" class="form-control" id="password_repeat" name="password_repeat"
+                                                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
+                                                           title="La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un carácter especial (@$!%*?&)"
+                                                           required>
+                                                    <label for="password" class="form-label" >Repite la contraseña*</label>
+                                                </div>
 
-                                    <button type="submit" class="btn btn-outline-light w-100">Restablecer</button>
-                                </form>
+                                                <button type="submit" class="btn btn-outline-light w-100">Restablecer</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

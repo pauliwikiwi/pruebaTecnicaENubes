@@ -50,17 +50,17 @@
                         }
                     ?>
                     <?php if ($name != ''): ?>
-                        <a class="nav-link text-muted" aria-current="page" href="<?= base_url('user/dashboard') ?>">
+                        <a class="nav-link ps-0 text-muted" aria-current="page" href="<?= base_url('user/dashboard') ?>">
                             Mis reservas
                         </a>
-                        <a class="nav-link" aria-current="page" href="<?= base_url('/logout') ?>">
+                        <a class="nav-link " aria-current="page" href="<?= base_url('/logout') ?>">
                             <i class="fa-solid fa-arrow-right-from-bracket text-muted"></i>
                             <span class="navbar-text">
                                 <?= $name ?>
                             </span>
                         </a>
                     <?php else: ?>
-                        <a class="nav-link" aria-current="page" href="<?= base_url('/login') ?>">
+                        <a class="nav-link ps-0" aria-current="page" href="<?= base_url('/login') ?>">
                             <i class="fa-solid fa-arrow-right-to-bracket text-muted"></i>
                             <span class="navbar-text">
                                 Iniciar Sesión
@@ -75,46 +75,65 @@
             <div class="col">
                 <div class="filters my-3">
                     <form id="filter_room_form" method="post">
-                        <div class="input-group custom-searchar justify-content-center">
-                            <div class="form-floating me-2">
-                                <input type="text" class="form-control datepicker" id="fecha_entrada" name="fecha_entrada" required>
-                                <label for="fecha_entrada">Fecha Entrada</label>
+                        <div class="custom-searchar justify-content-center">
+                            <div class="row">
+                                <div class="col-md-4 mb-2 col-sm-6">
+                                    <div class="form-floating ">
+                                        <input type="text" class="form-control datepicker" id="fecha_entrada" name="fecha_entrada" required>
+                                        <label for="fecha_entrada">Fecha Entrada</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2 col-sm-6">
+                                    <div class="form-floating ">
+                                        <input type="text" class="form-control datepicker" id="fecha_salida" name="fecha_salida" required>
+                                        <label for="fecha_salida">Fecha Salida</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="personas" aria-label="Floating label select example" name="personas" required>
+                                            <option value="1">1</option>
+                                            <option value="2" selected>2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                        <label for="floatingSelectGrid">Personas</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-floating me-2">
-                                <input type="text" class="form-control datepicker" id="fecha_salida" name="fecha_salida" required>
-                                <label for="fecha_salida">Fecha Salida</label>
+                            <div class="row mt-2">
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="categories" aria-label="floating label select" name="categories">
+                                            <option value="" selected disabled>Selecciona una opción</option>
+                                            <?php foreach ($categories as $category): ?>
+                                                <option value="<?= $category['id']; ?>"><?= $category['name']; ?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                        <label for="floatingSelectGrid">Categoría</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-2 col-sm-6">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control form-number" id="min_price" name="min_price" min="0" max="500">
+                                        <label for="min_price">Precio mínimo</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-2 col-sm-6">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control form-number" id="max_price" name="max_price" min="0" max="500">
+                                        <label for="max_price">Precio máximo</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <div class="form-floating h-100">
+                                        <button class="btn btn-outline-light h-100 w-100" type="submit" id="button-search">Buscar</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-floating me-2">
-                                <select class="form-select" id="personas" aria-label="Floating label select example" name="personas" required>
-                                    <option value="1">1</option>
-                                    <option value="2" selected>2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                </select>
-                                <label for="floatingSelectGrid">Personas</label>
-                            </div>
-                            <div class="form-floating me-2">
-                                <select class="form-select" id="categories" aria-label="floating label select" name="categories">
-                                    <option value="" selected disabled>Selecciona una opción</option>
-                                    <?php foreach ($categories as $category): ?>
-                                        <option value="<?= $category['id']; ?>"><?= $category['name']; ?></option>
-                                    <?php endforeach;?>
-                                </select>
-                                <label for="floatingSelectGrid">Categoría</label>
-                            </div>
-                            <div class="form-floating me-2">
-                                <input type="number" class="form-control form-number" id="min_price" name="min_price" min="0" max="500">
-                                <label for="min_price">Precio mínimo</label>
-                            </div>
-                            <div class="form-floating me-2">
-                                <input type="number" class="form-control form-number" id="max_price" name="max_price" min="0" max="500">
-                                <label for="max_price">Precio máximo</label>
-                            </div>
-                            <div class="form-floating">
-                                <button class="btn btn-outline-light h-100" type="submit" id="button-search">Buscar</button>
-                            </div>
+
                         </div>
                     </form>
                 </div>
@@ -136,14 +155,14 @@
             <div>
                 <?php foreach ($rooms as $room): ?>
                     <div class="row">
-                        <div class="col">
-                            <div class="card mb-2 custom-card">
+                        <div class="col-md-12">
+                            <div class="card mb-4 custom-card">
                                 <div class="row g-0">
                                     <div class="col-md-4">
                                         <img src="<?= base_url('images/rooms/' . $room['id'] . '/room.jpg') ?>"
                                              class="img-fluid rounded-start custom-height" alt="Imagen habitación">
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-8 d-flex justify-content-between flex-column">
                                         <div class="card-body">
                                             <h4 class="card-title font-titles"><?= $room['name']; ?></h4>
                                             <p class="card-text"><?= $room['description']; ?></p>
@@ -212,21 +231,24 @@
                                                         <small>Plancha (bajo petición)</small>
                                                     </div>
                                                 </div>
-                                                <div class="row justify-content-end align-items-center">
-                                                    <div class="col-md-2">
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row justify-content-end align-items-center">
+                                                <div class="col-md-6 text-end">
                                                     <span>
+                                                        Precio por noche:
                                                         <s class="me-3">
                                                             <?= number_format($room['price'] * 1.10); ?>€
                                                         </s>
                                                         <?= $room['price']; ?> €
                                                     </span>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <a class="btn btn-green" href="<?= base_url('/booking_room/' . $room['id'] . '?checkin_date=' . $fecha_entrada . '&checkout_date=' . $fecha_salida . '&guests=' . $personas) ?>">
-                                                            Reservar
-                                                        </a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <a class="btn w-100 btn-green" href="<?= base_url('/booking_room/' . $room['id'] . '?checkin_date=' . $fecha_entrada . '&checkout_date=' . $fecha_salida . '&guests=' . $personas) ?>">
+                                                        Reservar
+                                                    </a>
 
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

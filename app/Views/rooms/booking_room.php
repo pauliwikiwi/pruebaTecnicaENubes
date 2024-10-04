@@ -29,7 +29,7 @@
 <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
         <div class="container-fluid">
-            <a class="navbar-brand font-titles" href="#">Hotel Paula</a>
+            <a class="navbar-brand font-titles" href="<?= base_url('/') ?>">Hotel Paula</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                     aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -51,17 +51,17 @@
                 }
                 ?>
                 <?php if ($name != ''): ?>
-                    <a class="nav-link text-muted" aria-current="page" href="<?= base_url('user/dashboard') ?>">
+                    <a class="nav-link ps-0 text-muted" aria-current="page" href="<?= base_url('user/dashboard') ?>">
                         Mis reservas
                     </a>
-                    <a class="nav-link" aria-current="page" href="<?= base_url('/logout') ?>">
+                    <a class="nav-link ps-0" aria-current="page" href="<?= base_url('/logout') ?>">
                         <i class="fa-solid fa-arrow-right-from-bracket text-muted"></i>
                         <span class="navbar-text">
                                 <?= $name ?>
                             </span>
                     </a>
                 <?php else: ?>
-                    <a class="nav-link" aria-current="page" href="<?= base_url('/login') ?>">
+                    <a class="nav-link ps-0" aria-current="page" href="<?= base_url('/login') ?>">
                         <i class="fa-solid fa-arrow-right-to-bracket text-muted"></i>
                         <span class="navbar-text">
                                 Iniciar Sesión
@@ -72,8 +72,8 @@
         </div>
     </nav>
     <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-3">
+        <div class="row ">
+            <div class="col-md-3 mb-3">
                 <form id="filter_availability" method="get">
                     <input type="hidden" id="fecha_seleccionada_entrada" name="fecha_seleccionada_entrada" value="<?= $fecha_entrada?>">
                     <input type="hidden" id="fecha_seleccionada_salida" name="fecha_seleccionada_salida" value="<?= $fecha_salida?>">
@@ -108,10 +108,10 @@
                 </div>
                 <div class="card p-3">
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-md-4 d-flex justify-content-center">
                             <img src="<?= base_url('images/rooms/' . $room['id'] . '/room.jpg') ?>" alt="" width="150px" height="150px" style="object-fit: cover; border-radius: 20px">
                         </div>
-                        <div class="col-10">
+                        <div class="col-md-8">
                             <div class="card-body">
                                 <div class="card-text">
                                     <h5 class="font-titles">
@@ -199,10 +199,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-md-12">
                             <hr>
                         </div>
-                        <div class="col-12">
+                        <div class="col-md-12">
                             <h5>
                                 Precio
                             </h5>

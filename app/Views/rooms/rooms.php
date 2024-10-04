@@ -29,14 +29,14 @@
 <div>
     <?php foreach ($rooms as $room): ?>
         <div class="row">
-            <div class="col">
-                <div class="card mb-2 custom-card">
+            <div class="col-md-12">
+                <div class="card mb-4 custom-card">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img src="<?= base_url('images/rooms/' . $room['id'] . '/room.jpg') ?>"
                                  class="img-fluid rounded-start custom-height" alt="Imagen habitación">
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-8 d-flex justify-content-between flex-column">
                             <div class="card-body">
                                 <h4 class="card-title font-titles"><?= $room['name']; ?></h4>
                                 <p class="card-text"><?= $room['description']; ?></p>
@@ -105,20 +105,24 @@
                                             <small>Plancha (bajo petición)</small>
                                         </div>
                                     </div>
-                                    <div class="row justify-content-end align-items-center">
-                                        <div class="col-md-2">
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row justify-content-end align-items-center">
+                                    <div class="col-md-6 text-end">
                                                     <span>
+                                                        Precio por noche:
                                                         <s class="me-3">
                                                             <?= number_format($room['price'] * 1.10); ?>€
                                                         </s>
                                                         <?= $room['price']; ?> €
                                                     </span>
-                                        </div>
-                                        <div class="col-md-3">
-                                                <a class="btn btn-green" href="<?= base_url('/booking_room/' . $room['id'] . '?checkin_date=' . $fecha_entrada . '&checkout_date=' . $fecha_salida . '&guests=' . $personas) ?>">
-                                                    Reservar
-                                                </a>
-                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a class="btn w-100 btn-green" href="<?= base_url('/booking_room/' . $room['id'] . '?checkin_date=' . $fecha_entrada . '&checkout_date=' . $fecha_salida . '&guests=' . $personas) ?>">
+                                            Reservar
+                                        </a>
+
                                     </div>
                                 </div>
                             </div>

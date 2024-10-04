@@ -1,5 +1,38 @@
 # Hotel Paula - Prueba Técnica eNubes
 
+# Tabla de Contenidos
+
+1. [Introducción](#introducción)
+2. [Autor](#autor)
+3. [Instalación](#instalación)  
+   3.1 [Instalar Docker](#instalar-docker)  
+   3.2 [Instalar Docker Desktop](#instalar-docker-desktop)  
+   3.3 [Configuración imagen MySQL](#Configuración-imágen-MySQL)  
+   3.4 [Configuración imagen PHP](#Configuración-imágen-php)
+4. [Setup](#setup)  
+   4.1 [Setup MySQL](#setup-mysql)  
+   4.2 [Setup PHP](#setup-php)  
+   4.3 [Configuración extra para la base de datos](#configuración-extra-para-la-base-de-datos)  
+   4.4 [Instalación de módulos](#instalación-de-modulos)  
+   4.5 [Configuraciones del proyecto](#configuraciones-del-proyecto)  
+   4.6 [Ejecución de migraciones](#ejecución-de-migraciones)  
+   4.7 [Ejecución de seeders](#ejecución-de-seeders)
+5. [Arquitectura](#arquitectura)  
+   5.1 [Arquitectura de BBDD](#arquitectura-de-bbdd)  
+   5.2 [Arquitectura del Código](#arquitectura-del-código)  
+   5.2.1 [Modelo](#modelo)  
+   5.2.2 [Vistas](#vistas)  
+   5.2.3 [Controladores](#controladores)
+6. [Filtros y Autenticación](#filtros-y-autenticación)
+7. [Tareas pendientes y errores conocidos](#tareas-pendientes-de-hacer-o-errores-conocidos)  
+   7.1 [Registro](#registro)  
+   7.2 [Resetear Contraseña](#resetear-contraseña)  
+   7.3 [Login](#login)  
+   7.4 [Reserva](#reserva)  
+   7.5 [PDF](#pdf)
+
+
+
 ## Introducción
 
 Este proyecto es una prueba técnica hecha para la empresa eNubes.
@@ -16,6 +49,9 @@ Las tecnologías usadas han sido:
    - Material Symbols
    - Font Awesome
    - Tabler Icons
+
+## Autor
+Paula Blázquez Wnuk
 
 ## Instalación
 Para crear este proyecto se ha usado Docker Desktop, para tanto PHP como MySQL.
@@ -234,7 +270,7 @@ Para la base de datos decidí que eran necesarias 5 tablas
   - created_at
   - updated_at
 
-### Arquitectura Codigo
+### Arquitectura del código
 Se usa una arquitectura MVC (modelo vista controlador).
 
 #### Modelo
@@ -307,7 +343,6 @@ empiezan por **user**, por ejemplo `user/dashboard`.
 
 ## Tareas pendientes de hacer o errores conocidos
 Hay algunas tareas sin hacer o algunas funcionalidades que aunque están implementadas no funcionan correctamente.
-Un error generalizado es el resposive de las páginas.
 
 ### Registro:
 - Envío de correos para confirmación del email
@@ -329,6 +364,3 @@ Un error generalizado es el resposive de las páginas.
 - Sacar correctamente la imagen
 - Meter estilos en el pdf
 
-
-## Autor
-Paula Blázquez Wnuk

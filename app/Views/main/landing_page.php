@@ -28,7 +28,7 @@
 <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
         <div class="container-fluid">
-            <a class="navbar-brand font-titles" href="#">Hotel Paula</a>
+            <a class="navbar-brand font-titles" href="<?= base_url('/') ?>">Hotel Paula</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                     aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -60,7 +60,7 @@
                             </span>
                     </a>
                 <?php else: ?>
-                    <a class="nav-link" aria-current="page" href="<?= base_url('/login') ?>">
+                    <a class="nav-link ps-0" aria-current="page" href="<?= base_url('/login') ?>">
                         <i class="fa-solid fa-arrow-right-to-bracket text-muted"></i>
                         <span class="navbar-text">
                                 Iniciar Sesión
